@@ -1,0 +1,13 @@
+server/app/Question/node_modules
+server/app/Question/public/hot
+server/app/Question/public/storage
+server/app/Question/storage/*.key
+server/app/Question/vendor
+.env
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+
+.DS_Store
