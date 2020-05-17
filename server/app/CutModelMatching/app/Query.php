@@ -21,9 +21,9 @@ class Query
                 $eloquent = $eloquent->where($lhs, $operator, $rhs);
             }
         }
-        if (array_key_exists("orderBy", $options)) {
-            $orderBy = $options["orderBy"];
-            $columns = explode(",", $orderBy);
+        if (array_key_exists("sort", $options)) {
+            $sort = $options["sort"];
+            $columns = explode(",", $sort);
             foreach ($columns as $column) {
                 if (Str::startsWith($column, "-")) {
                     $eloquent = $eloquent->orderBy(substr($column, 1), "desc");
