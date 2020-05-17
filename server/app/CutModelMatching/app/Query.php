@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Schema;
 
-class QueryAdapter
+class Query
 {
 
     public static function execute(string $class, $options)
