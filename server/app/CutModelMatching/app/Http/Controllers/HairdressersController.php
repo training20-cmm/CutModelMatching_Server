@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Hairdresser;
 use App\Http\Requests\HairdresserRegistrationRequest;
 use App\Http\Responses\HairdresserRegistrationResponse;
-use App\QueryAdapter;
+use App\Query;
 use App\Services\HairdresserRegistrationService;
 use Illuminate\Http\Request;
 
@@ -14,7 +14,7 @@ class HairdressersController extends Controller
 
     public function index(Request $request)
     {
-        $hairdressers = QueryAdapter::execute(Hairdresser::class, $request->all());
+        $hairdressers = Query::execute(Hairdresser::class, $request->all());
         return $hairdressers;
     }
 

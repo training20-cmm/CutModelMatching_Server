@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class Query
 {
@@ -21,6 +22,17 @@ class Query
                 $rhs = $components[2];
                 info($components);
                 $eloquent = $eloquent->where($lhs, $operator, $rhs);
+            }
+        }
+        if (array_key_exists("orderBy", $options)) {
+            $orderBy = $options["orderBy"];
+            $columns = explode(",", $orderBy);
+            foreach ($columns as $column) {
+                if (Str::startsWith($column, "-")) {
+                    $eloquent = $eloquent->orderBy(substr($column, 1), "desc");
+                } else {
+                    $eloquent = $eloquent->orderBy($column);
+                }
             }
         }
         if (array_key_exists("fields", $options)) {
