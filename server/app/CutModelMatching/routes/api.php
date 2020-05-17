@@ -19,6 +19,9 @@ Route::group(["middleware" => "api"], function () {
     Route::post("hairdressers/register", "HairdressersController@register");
     Route::post("/model_access_tokens", "ModelAccessTokensController@issue");
     Route::post("/models/register", "ModelsController@register");
+
+    //
+    Route::get("hairdressers/test", "HairdressersController@test");
 });
 
 Route::group(["middleware" => ["api", "auth.model.token"]], function () {
