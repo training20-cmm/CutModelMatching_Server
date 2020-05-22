@@ -22,8 +22,8 @@ class CreateSalonsTable extends Migration
             $table->string("address", Salon::ADDRESS_MAX_LENGTH);
             $table->string("building", Salon::BUILDING_MAX_LENGTH);
             $table->string("bio_text", Salon::BIO_TEXT_MAX_LENGTH);
-            $table->string("profile_image_path", Salon::PROFILE_IMAGE_PATH_MAX_LENGTH);
-            $table->string("header_image_path", Salon::HEADER_IMAGE_PATH_MAX_LENGTH);
+            $table->tinyInteger("capacity")->unsigned();
+            $table->smallInteger("parking")->unsigned();
             $table->timestamps();
         });
     }

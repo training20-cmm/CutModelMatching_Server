@@ -1,11 +1,11 @@
 <?php
 
-use App\HairdresserAccessToken;
+use App\ModelRefreshToken;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHairdresserAccessTokens extends Migration
+class CreateModelRefreshTokensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,13 +14,13 @@ class CreateHairdresserAccessTokens extends Migration
      */
     public function up()
     {
-        Schema::create('hairdresser_access_tokens', function (Blueprint $table) {
+        Schema::create('model_refresh_tokens', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("token", HairdresserAccessToken::TOKEN_MAX_LENGTH)->unique();
+            $table->string("token", ModelRefreshToken::TOKEN_MAX_LENGTH)->unique();
             $table->date("expiration");
-            $table->integer("hairdresser_id")->unsigned();
+            $table->integer("model_id")->unsigned();
             $table->timestamps();
-            $table->foreign("hairdresser_id")->references("id")->on("hairdressers");
+            $table->foreign("model_id")->references("id")->on("models");
         });
     }
 
@@ -31,6 +31,6 @@ class CreateHairdresserAccessTokens extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hairdresser_access_tokens');
+        Schema::dropIfExists('model_refresh_tokens');
     }
 }
