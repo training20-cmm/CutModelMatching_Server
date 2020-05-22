@@ -13,8 +13,10 @@ class Hairdresser extends Model
     const PASSWORD_MIN_LENGTH = 6;
     const PASSWORD_MAX_LENGTH = 60;
     const BIO_TEXT_MAX_LENGTH = 2056;
+    const SPECIALTY_MAX_LENGTH = 512;
     const PROFILE_IMAGE_PATH_MAX_LENGTH = 1023;
     const HEADER_IMAGE_PATH_MAX_LENGTH = 1023;
+    const GENDER_LENGTH = 1;
 
     protected $fillable = [
         'identifier', 'name', 'password',

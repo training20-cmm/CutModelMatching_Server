@@ -15,6 +15,7 @@ class Model extends Authenticatable
     const PASSWORD_MIN_LENGTH = 6;
     const PASSWORD_MAX_LENGTH = 60;
     const EMAIL_MAX_LENGTH = 255;
+    const GENDER_LENGTH = 1;
 
     /**
      * The attributes that are mass assignable.

@@ -23,6 +23,8 @@ class CreateModelsTable extends Migration
             $table->string('password', Model::PASSWORD_MAX_LENGTH);
             $table->string('name', Model::NAME_MAX_LENGTH);
             $table->string('email', Model::EMAIL_MAX_LENGTH)->unique()->nullable();
+            $table->char("gender", Model::GENDER_LENGTH);
+            $table->date("birthday");
             $table->timestamps();
         });
     }
