@@ -21,8 +21,11 @@ class CreateHairdressersTable extends Migration
             $table->string('name', Hairdresser::NAME_MAX_LENGTH);
             $table->string('email')->unique()->nullable();
             $table->string("bio_text", Hairdresser::BIO_TEXT_MAX_LENGTH)->nullable();
+            $table->string("specialty", Hairdresser::SPECIALTY_MAX_LENGTH)->nullable();
             $table->string("profile_image_path", Hairdresser::PROFILE_IMAGE_PATH_MAX_LENGTH)->nullable();
             $table->string("header_image_path", Hairdresser::HEADER_IMAGE_PATH_MAX_LENGTH)->nullable();
+            $table->char("gender", Hairdresser::GENDER_LENGTH);
+            $table->date("birthday");
             $table->integer("salon_id")->unsigned()->nullable();
             $table->timestamps();
             $table->foreign("salon_id")->references("id")->on("salons");

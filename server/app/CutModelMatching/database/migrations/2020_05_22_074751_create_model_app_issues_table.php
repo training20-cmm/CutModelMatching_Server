@@ -1,11 +1,11 @@
 <?php
 
-use App\ModelAccessToken;
+use App\ModelAppIssue;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModelAccessTokens extends Migration
+class CreateModelAppIssuesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,9 @@ class CreateModelAccessTokens extends Migration
      */
     public function up()
     {
-        Schema::create('model_access_tokens', function (Blueprint $table) {
+        Schema::create('model_app_issues', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("token", ModelAccessToken::TOKEN_MAX_LENGTH)->unique();
-            $table->date("expiration");
+            $table->string("content", ModelAppIssue::CONTENT_MAX_LENGTH);
             $table->integer("model_id")->unsigned();
             $table->timestamps();
             $table->foreign("model_id")->references("id")->on("models");
@@ -31,6 +30,6 @@ class CreateModelAccessTokens extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('model_access_tokens');
+        Schema::dropIfExists('model_app_issues');
     }
 }

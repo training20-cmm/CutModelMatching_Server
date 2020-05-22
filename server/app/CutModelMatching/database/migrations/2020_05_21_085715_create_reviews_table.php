@@ -1,11 +1,11 @@
 <?php
 
-use App\HairdresserRefreshToken;
+use App\Review;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHairdresserRefreshTokens extends Migration
+class CreateReviewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,17 @@ class CreateHairdresserRefreshTokens extends Migration
      */
     public function up()
     {
-        Schema::create('hairdresser_refresh_tokens', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("token", HairdresserRefreshToken::TOKEN_MAX_LENGTH)->unique();
-            $table->date("expiration");
+            $table->string("content", Review::CONTENT_MAX_LENGTH);
+            $table->smallInteger("skill")->unsigned();
+            $table->smallInteger("service")->unsigned();
+            $table->smallInteger("salon")->unsigned();
+            $table->smallInteger("app")->unsigned();
+            $table->integer("model_id")->unsigned();
             $table->integer("hairdresser_id")->unsigned();
             $table->timestamps();
+            $table->foreign("model_id")->references("id")->on("models");
             $table->foreign("hairdresser_id")->references("id")->on("hairdressers");
         });
     }
@@ -31,6 +36,6 @@ class CreateHairdresserRefreshTokens extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hairdresser_refresh_tokens');
+        Schema::dropIfExists('reviews');
     }
 }
