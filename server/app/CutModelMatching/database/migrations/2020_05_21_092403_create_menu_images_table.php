@@ -1,10 +1,11 @@
 <?php
 
+use App\MenuImage;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReservationTable extends Migration
+class CreateMenuImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +14,11 @@ class CreateReservationTable extends Migration
      */
     public function up()
     {
-        Schema::create('reservation', function (Blueprint $table) {
-            $table->integer("model_id")->unsigned();
-            $table->integer("menu_id")->unsigned()->unique();
+        Schema::create('menu_images', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string("path", MenuImage::PATH_MAX_LENGTH);
+            $table->integer("menu_id")->unsigned();
             $table->timestamps();
-            $table->primary(["model_id", "menu_id"]);
-            $table->foreign("model_id")->references("id")->on("models");
             $table->foreign("menu_id")->references("id")->on("menus");
         });
     }
@@ -30,6 +30,6 @@ class CreateReservationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reservation');
+        Schema::dropIfExists('menu_images');
     }
 }

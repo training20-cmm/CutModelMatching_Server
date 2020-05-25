@@ -19,7 +19,7 @@ class Hairdresser extends Model
     const GENDER_LENGTH = 1;
 
     protected $fillable = [
-        'identifier', 'name', 'password',
+        'name'
     ];
 
     public function salon(): BelongsTo

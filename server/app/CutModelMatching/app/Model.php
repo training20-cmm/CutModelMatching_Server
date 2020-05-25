@@ -23,34 +23,6 @@ class Model extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'identifier', 'name', 'password',
+        "name"
     ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    public function refreshToken(): ?ModelRefreshToken
-    {
-        return $this->refreshTokens()->orderBy("id", "desc")->first();
-    }
-
-    public function refreshTokens(): HasMany
-    {
-        return $this->hasMany(ModelRefreshToken::class);
-    }
 }

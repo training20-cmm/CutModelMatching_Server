@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReservationTable extends Migration
+class CreateMenuTagAssociationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateReservationTable extends Migration
      */
     public function up()
     {
-        Schema::create('reservation', function (Blueprint $table) {
-            $table->integer("model_id")->unsigned();
-            $table->integer("menu_id")->unsigned()->unique();
+        Schema::create('menu_tag_association', function (Blueprint $table) {
+            $table->integer("menu_id")->unsigned();
+            $table->integer("tag_id")->unsigned();
             $table->timestamps();
-            $table->primary(["model_id", "menu_id"]);
-            $table->foreign("model_id")->references("id")->on("models");
+            $table->primary(["menu_id", "tag_id"]);
             $table->foreign("menu_id")->references("id")->on("menus");
+            $table->foreign("tag_id")->references("id")->on("menu_tags");
         });
     }
 
@@ -30,6 +30,6 @@ class CreateReservationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reservation');
+        Schema::dropIfExists('menu_tag_association');
     }
 }

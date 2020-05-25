@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReservationTable extends Migration
+class CreateBlogFavoritesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateReservationTable extends Migration
      */
     public function up()
     {
-        Schema::create('reservation', function (Blueprint $table) {
+        Schema::create('blog_favorites', function (Blueprint $table) {
+            $table->integer("blog_id")->unsigned();
             $table->integer("model_id")->unsigned();
-            $table->integer("menu_id")->unsigned()->unique();
             $table->timestamps();
-            $table->primary(["model_id", "menu_id"]);
+            $table->primary(["blog_id", "model_id"]);
+            $table->foreign("blog_id")->references("id")->on("blogs");
             $table->foreign("model_id")->references("id")->on("models");
-            $table->foreign("menu_id")->references("id")->on("menus");
         });
     }
 
@@ -30,6 +30,6 @@ class CreateReservationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reservation');
+        Schema::dropIfExists('blog_favorites');
     }
 }
