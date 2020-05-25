@@ -1,11 +1,10 @@
 <?php
 
-use App\ModelRefreshToken;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModelRefreshTokens extends Migration
+class CreateBlogFavoritesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +13,12 @@ class CreateModelRefreshTokens extends Migration
      */
     public function up()
     {
-        Schema::create('model_refresh_tokens', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string("token", ModelRefreshToken::TOKEN_MAX_LENGTH)->unique();
-            $table->date("expiration");
+        Schema::create('blog_favorites', function (Blueprint $table) {
+            $table->integer("blog_id")->unsigned();
             $table->integer("model_id")->unsigned();
             $table->timestamps();
+            $table->primary(["blog_id", "model_id"]);
+            $table->foreign("blog_id")->references("id")->on("blogs");
             $table->foreign("model_id")->references("id")->on("models");
         });
     }
@@ -31,6 +30,6 @@ class CreateModelRefreshTokens extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('model_refresh_tokens');
+        Schema::dropIfExists('blog_favorites');
     }
 }

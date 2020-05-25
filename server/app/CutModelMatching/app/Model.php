@@ -12,9 +12,10 @@ class Model extends Authenticatable
 
     const IDENTIFIER_MAX_LENGTH = 64;
     const NAME_MAX_LENGTH = 64;
+    const BIO_TEXT_MAX_LENGTH = 2056;
     const PASSWORD_MIN_LENGTH = 6;
     const PASSWORD_MAX_LENGTH = 60;
-    const EMAIL_MAX_LENGTH = 255;
+    const GENDER_LENGTH = 1;
 
     /**
      * The attributes that are mass assignable.
@@ -22,34 +23,6 @@ class Model extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'identifier', 'name', 'password',
+        "name"
     ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    public function refreshToken(): ?ModelRefreshToken
-    {
-        return $this->refreshTokens()->orderBy("id", "desc")->first();
-    }
-
-    public function refreshTokens(): HasMany
-    {
-        return $this->hasMany(ModelRefreshToken::class);
-    }
 }

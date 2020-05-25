@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTestCTable extends Migration
+class CreateSalonOpenHoursTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateTestCTable extends Migration
      */
     public function up()
     {
-        Schema::create('test_c', function (Blueprint $table) {
+        Schema::create('salon_open_hours', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("name");
-            $table->string("password");
-            $table->integer("b_id")->unsigned();
+            $table->tinyInteger("open")->unsigned();
+            $table->tinyInteger("close")->unsigned();
+            $table->integer("salon_id")->unsigned();
             $table->timestamps();
-            $table->foreign("b_id")->references("id")->on("test_b");
+            $table->foreign("salon_id")->references("id")->on("salons");
         });
     }
 
@@ -30,6 +30,6 @@ class CreateTestCTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('test_c');
+        Schema::dropIfExists('salon_open_hours');
     }
 }

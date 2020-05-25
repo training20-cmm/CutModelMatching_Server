@@ -1,11 +1,11 @@
 <?php
 
-use App\HairdresserRefreshToken;
+use App\PasswordResetToken;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHairdresserRefreshTokens extends Migration
+class CreatePasswordResetTokensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,13 +14,13 @@ class CreateHairdresserRefreshTokens extends Migration
      */
     public function up()
     {
-        Schema::create('hairdresser_refresh_tokens', function (Blueprint $table) {
+        Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("token", HairdresserRefreshToken::TOKEN_MAX_LENGTH)->unique();
+            $table->string("token", PasswordResetToken::TOKEN_MAX_LENGTH)->unique();
             $table->date("expiration");
-            $table->integer("hairdresser_id")->unsigned();
+            $table->integer("user_id")->unsigned();
             $table->timestamps();
-            $table->foreign("hairdresser_id")->references("id")->on("hairdressers");
+            $table->foreign("user_id")->references("id")->on("users");
         });
     }
 
@@ -31,6 +31,6 @@ class CreateHairdresserRefreshTokens extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hairdresser_refresh_tokens');
+        Schema::dropIfExists('password_reset_tokens');
     }
 }

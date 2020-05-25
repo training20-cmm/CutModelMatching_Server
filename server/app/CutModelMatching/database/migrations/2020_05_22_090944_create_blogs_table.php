@@ -1,10 +1,11 @@
 <?php
 
+use App\Blog;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTestB1Table extends Migration
+class CreateBlogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +14,13 @@ class CreateTestB1Table extends Migration
      */
     public function up()
     {
-        Schema::create('test_b_1', function (Blueprint $table) {
+        Schema::create('blogs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("name");
-            $table->string("password");
-            $table->integer("b_id")->unsigned();
+            $table->string("title", Blog::TITLE_MAX_LENGTH);
+            $table->string("content", Blog::CONTENT_MEX_LENGTH);
+            $table->integer("hairdresser_id")->unsigned();
             $table->timestamps();
-            $table->foreign("b_id")->references("id")->on("test_b");
+            $table->foreign("hairdresser_id")->references("id")->on("hairdressers");
         });
     }
 
@@ -30,6 +31,6 @@ class CreateTestB1Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('test_b_1');
+        Schema::dropIfExists('blogs');
     }
 }

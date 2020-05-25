@@ -1,10 +1,11 @@
 <?php
 
+use App\MenuTreatment;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTestC1Table extends Migration
+class CreateMenuTreatmentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +14,10 @@ class CreateTestC1Table extends Migration
      */
     public function up()
     {
-        Schema::create('test_c_1', function (Blueprint $table) {
+        Schema::create('menu_treatment', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("name");
-            $table->string("password");
-            $table->integer("c_id")->unsigned();
+            $table->string("name", MenuTreatment::NAME_MAX_LENGTH);
             $table->timestamps();
-            $table->foreign("c_id")->references("id")->on("test_c");
         });
     }
 
@@ -30,6 +28,6 @@ class CreateTestC1Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('test_c_1');
+        Schema::dropIfExists('menu_treatment');
     }
 }

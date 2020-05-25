@@ -1,10 +1,11 @@
 <?php
 
+use App\AccessToken;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTestATable extends Migration
+class CreateAccessTokensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +14,13 @@ class CreateTestATable extends Migration
      */
     public function up()
     {
-        Schema::create('test_a', function (Blueprint $table) {
+        Schema::create('access_tokens', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("name");
-            $table->string("password");
+            $table->string("token", AccessToken::TOKEN_MAX_LENGTH)->unique();
+            $table->date("expiration");
+            $table->integer("user_id")->unsigned();
             $table->timestamps();
+            $table->foreign("user_id")->references("id")->on("users");
         });
     }
 
@@ -28,6 +31,6 @@ class CreateTestATable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('test_a');
+        Schema::dropIfExists('access_tokens');
     }
 }

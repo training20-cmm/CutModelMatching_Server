@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TestC1 extends Model
+class MenuTreatment extends Model
 {
-    //
+    const NAME_MAX_LENGTH = 32;
 }

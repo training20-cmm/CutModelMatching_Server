@@ -1,11 +1,10 @@
 <?php
 
-use App\ModelAccessToken;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModelAccessTokens extends Migration
+class CreateCanceledReservationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,13 +13,14 @@ class CreateModelAccessTokens extends Migration
      */
     public function up()
     {
-        Schema::create('model_access_tokens', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string("token", ModelAccessToken::TOKEN_MAX_LENGTH)->unique();
-            $table->date("expiration");
+        Schema::create('canceled_reservation', function (Blueprint $table) {
+            $table->integer("menu_id")->unsigned();
             $table->integer("model_id")->unsigned();
+            $table->dateTime("reserved_at");
             $table->timestamps();
+            $table->primary(["menu_id", "model_id"]);
             $table->foreign("model_id")->references("id")->on("models");
+            $table->foreign("menu_id")->references("id")->on("menus");
         });
     }
 
@@ -31,6 +31,6 @@ class CreateModelAccessTokens extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('model_access_tokens');
+        Schema::dropIfExists('canceled_reservation');
     }
 }

@@ -1,14 +1,11 @@
 <?php
 
-use App\Domain\ModelIdentifier;
-use App\Domain\ModelName;
-use App\Domain\ModelPassword;
-use App\Model;
+use App\AppIssue;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModelsTable extends Migration
+class CreateAppIssuesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,12 +14,9 @@ class CreateModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('models', function (Blueprint $table) {
+        Schema::create('app_issues', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', Model::NAME_MAX_LENGTH);
-            $table->string("bio_text", Model::BIO_TEXT_MAX_LENGTH);
-            $table->char("gender", Model::GENDER_LENGTH);
-            $table->date("birthday");
+            $table->string("content", AppIssue::CONTENT_MAX_LENGTH);
             $table->integer("user_id")->unsigned();
             $table->timestamps();
             $table->foreign("user_id")->references("id")->on("users");
@@ -36,6 +30,6 @@ class CreateModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('models');
+        Schema::dropIfExists('app_issues');
     }
 }

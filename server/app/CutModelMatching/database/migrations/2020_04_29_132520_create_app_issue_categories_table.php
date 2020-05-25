@@ -1,10 +1,11 @@
 <?php
 
+use App\AppIssueCategory;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTestBTable extends Migration
+class CreateAppIssueCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +14,10 @@ class CreateTestBTable extends Migration
      */
     public function up()
     {
-        Schema::create('test_b', function (Blueprint $table) {
+        Schema::create('app_issue_categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("name");
-            $table->string("password");
-            $table->integer("a_id")->unsigned();
+            $table->string("name", AppIssueCategory::NAME_MAX_LENGTH);
             $table->timestamps();
-            $table->foreign("a_id")->references("id")->on("test_a");
         });
     }
 
@@ -30,6 +28,6 @@ class CreateTestBTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('test_b');
+        Schema::dropIfExists('app_issue_categories');
     }
 }

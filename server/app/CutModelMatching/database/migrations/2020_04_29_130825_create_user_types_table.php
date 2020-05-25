@@ -1,10 +1,11 @@
 <?php
 
+use App\UserType;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTestA1Table extends Migration
+class CreateUserTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +14,10 @@ class CreateTestA1Table extends Migration
      */
     public function up()
     {
-        Schema::create('test_a_1', function (Blueprint $table) {
+        Schema::create('user_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("name");
-            $table->string("password");
-            $table->integer("a_id")->unsigned();
+            $table->string("name", UserType::NAME_MAX_LENGTH);
             $table->timestamps();
-            $table->foreign("a_id")->references("id")->on("test_a");
         });
     }
 
@@ -30,6 +28,6 @@ class CreateTestA1Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('test_a_1');
+        Schema::dropIfExists('user_types');
     }
 }
