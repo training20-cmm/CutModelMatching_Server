@@ -17,10 +17,10 @@ class CreateReviewsTable extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->increments('id');
             $table->string("content", Review::CONTENT_MAX_LENGTH);
-            $table->smallInteger("skill")->unsigned();
-            $table->smallInteger("service")->unsigned();
-            $table->smallInteger("salon")->unsigned();
-            $table->smallInteger("app")->unsigned();
+            $table->tinyInteger("skill")->unsigned();
+            $table->tinyInteger("service")->unsigned();
+            $table->tinyInteger("salon")->unsigned();
+            $table->tinyInteger("app")->unsigned();
             $table->integer("model_id")->unsigned();
             $table->integer("hairdresser_id")->unsigned();
             $table->timestamps();

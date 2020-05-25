@@ -12,9 +12,9 @@ class Model extends Authenticatable
 
     const IDENTIFIER_MAX_LENGTH = 64;
     const NAME_MAX_LENGTH = 64;
+    const BIO_TEXT_MAX_LENGTH = 2056;
     const PASSWORD_MIN_LENGTH = 6;
     const PASSWORD_MAX_LENGTH = 60;
-    const EMAIL_MAX_LENGTH = 255;
     const GENDER_LENGTH = 1;
 
     /**

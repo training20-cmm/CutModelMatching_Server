@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string("identifier", User::IDENTIFIER_MAX_LENGTH);
             $table->string("password", User::PASSWORD_MAX_LENGTH);
+            $table->string("email", User::EMAIL_MAX_LENGTH)->unique()->nullable();
             $table->integer("type_id")->unsigned();
             $table->timestamps();
             $table->foreign("type_id")->references("id")->on("user_types");
