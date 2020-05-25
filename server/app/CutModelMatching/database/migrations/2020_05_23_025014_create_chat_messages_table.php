@@ -17,7 +17,7 @@ class CreateChatMessagesTable extends Migration
         Schema::create('chat_messages', function (Blueprint $table) {
             $table->increments('id');
             $table->string("content", ChatMessage::CONTENT_MAX_LENGTH)->nullable();
-            $table->string("image_path")->nullable();
+            $table->string("image_path", ChatMessage::IMAGE_PATH_MAX_LENGTH)->nullable();
             $table->integer("sender_user_id")->unsigned();
             $table->integer("receiver_user_id")->unsigned();
             $table->timestamps();
