@@ -18,7 +18,6 @@ class CreateHairstylesTable extends Migration
             $table->increments('id');
             $table->string("title", Hairstyle::TITLE_MAX_LENGTH);
             $table->string("comment", Hairstyle::COMMENT_MAX_LENGTH);
-            $table->string("image_path", Hairstyle::IMAGE_PATH_MAX_LENGTH);
             $table->timestamps();
         });
     }
