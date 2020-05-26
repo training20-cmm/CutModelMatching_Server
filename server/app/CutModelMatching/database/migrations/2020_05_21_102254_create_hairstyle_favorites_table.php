@@ -16,8 +16,8 @@ class CreateHairstyleFavoritesTable extends Migration
         Schema::create('hairstyle_favorites', function (Blueprint $table) {
             $table->integer("hairstyle_id")->unsigned();
             $table->integer("model_id")->unsigned();
-            $table->primary(["hairstyle_id", "model_id"]);
             $table->timestamps();
+            $table->primary(["hairstyle_id", "model_id"]);
             $table->foreign("hairstyle_id")->references("id")->on("hairstyles");
             $table->foreign("model_id")->references("id")->on("models");
         });
