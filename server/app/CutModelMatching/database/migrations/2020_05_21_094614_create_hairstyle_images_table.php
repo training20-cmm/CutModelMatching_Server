@@ -1,11 +1,11 @@
 <?php
 
-use App\Hairstyle;
+use App\HairstyleImage;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHairstylesTable extends Migration
+class CreateHairstyleImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,12 @@ class CreateHairstylesTable extends Migration
      */
     public function up()
     {
-        Schema::create('hairstyles', function (Blueprint $table) {
+        Schema::create('hairstyle_images', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("title", Hairstyle::TITLE_MAX_LENGTH);
-            $table->string("comment", Hairstyle::COMMENT_MAX_LENGTH);
-            $table->string("image_path", Hairstyle::IMAGE_PATH_MAX_LENGTH);
+            $table->string("path", HairstyleImage::PATH_MAX_LENGTH);
+            $table->integer("hairstyle_id")->unsigned();
             $table->timestamps();
+            $table->foreign("hairstyle_id")->references("id")->on("hairstyles");
         });
     }
 
@@ -30,6 +30,6 @@ class CreateHairstylesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hairstyles');
+        Schema::dropIfExists('hairstyle_images');
     }
 }
