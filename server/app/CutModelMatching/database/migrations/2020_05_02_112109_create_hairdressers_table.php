@@ -17,8 +17,8 @@ class CreateHairdressersTable extends Migration
         Schema::create('hairdressers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', Hairdresser::NAME_MAX_LENGTH);
-            $table->string("bio_text", Hairdresser::BIO_TEXT_MAX_LENGTH)->nullable();
-            $table->string("specialty", Hairdresser::SPECIALTY_MAX_LENGTH)->nullable();
+            $table->string("bio_text", Hairdresser::BIO_TEXT_MAX_LENGTH)->default("");
+            $table->string("specialty", Hairdresser::SPECIALTY_MAX_LENGTH)->default("");
             $table->string("profile_image_path", Hairdresser::PROFILE_IMAGE_PATH_MAX_LENGTH)->nullable();
             $table->string("header_image_path", Hairdresser::HEADER_IMAGE_PATH_MAX_LENGTH)->nullable();
             $table->char("gender", Hairdresser::GENDER_LENGTH);

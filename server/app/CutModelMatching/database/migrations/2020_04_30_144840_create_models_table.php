@@ -20,7 +20,7 @@ class CreateModelsTable extends Migration
         Schema::create('models', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', Model::NAME_MAX_LENGTH);
-            $table->string("bio_text", Model::BIO_TEXT_MAX_LENGTH);
+            $table->string("bio_text", Model::BIO_TEXT_MAX_LENGTH)->default("");
             $table->char("gender", Model::GENDER_LENGTH);
             $table->date("birthday");
             $table->integer("user_id")->unsigned();
