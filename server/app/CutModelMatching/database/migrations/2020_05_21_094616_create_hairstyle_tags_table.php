@@ -17,7 +17,7 @@ class CreateHairstyleTagsTable extends Migration
         Schema::create('hairstyle_tags', function (Blueprint $table) {
             $table->increments('id');
             $table->string("name", HairstyleTag::NAME_MAX_LENGTH)->unique();
-            $table->char("color", HairstyleTag::COLOR_LENGTH);
+            $table->char("color", HairstyleTag::COLOR_LENGTH)->unique();
             $table->integer("category_id")->unsigned();
             $table->timestamps();
             $table->foreign("category_id")->references("id")->on("hairstyle_tag_categories");
