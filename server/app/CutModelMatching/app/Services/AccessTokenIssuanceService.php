@@ -2,17 +2,16 @@
 
 namespace App\Services;
 
+use App\AccessToken;
 use App\Exceptions\ExpiredRefreshTokenException;
 use App\Exceptions\OldRefreshTokenException;
-use App\HairdresserAccessToken;
-use App\HairdresserRefreshToken;
-use App\ModelAccessToken;
+use App\RefreshToken;
 use Carbon\Carbon;
 
 class AccessTokenIssuanceService
 {
 
-    public static function execute($refreshToken): AccessTokenIssuanceServiceOutput
+    public function issue(RefreshToken $refreshToken): AccessTokenIssuanceServiceOutput
     {
         $expired = (new Carbon($refreshToken->expiration))->lt(Carbon::today());
         if ($expired) {
@@ -26,16 +25,12 @@ class AccessTokenIssuanceService
         $parameters = [
             "expiration" => $expiration,
             "token" => $token,
-            "hairdresser_id" => $refreshToken->hairdresser_id
+            "user_id" => $refreshToken->user_id
         ];
-        $isHaiardresser = $refreshToken instanceof HairdresserRefreshToken;
-        $idKey = $isHaiardresser ? "hairdresser_id" : "model_id";
-        $id = $refreshToken[$idKey];
-        $parameters[$idKey] = $id;
-        $accessToken = $isHaiardresser ? HairdresserAccessToken::create($parameters) : ModelAccessToken::create($parameters);
-        $newRefreshToken = RefreshTokenIssuanceService::execute(
-            $id,
-            $isHaiardresser
+        $accessToken = AccessToken::create($parameters);
+        $refreshTokenIssuanceService = new RefreshTokenIssuanceService();
+        $newRefreshToken = $refreshTokenIssuanceService->issue(
+            $refreshToken->user_id
         );
         return new AccessTokenIssuanceServiceOutput(
             $accessToken,
@@ -50,7 +45,7 @@ class AccessTokenIssuanceServiceOutput
     public $accessToken;
     public $refreshToken;
 
-    public function __construct($accessToken, $refreshToken)
+    public function __construct(AccessToken $accessToken, RefreshToken $refreshToken)
     {
         $this->accessToken = $accessToken;
         $this->refreshToken = $refreshToken;

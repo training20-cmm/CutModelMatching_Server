@@ -10,7 +10,7 @@ class User extends Model
     const PASSWORD_MAX_LENGTH = 60;
     const EMAIL_MAX_LENGTH = 255;
 
-    protected $fillable = ["identifier", "password"];
+    protected $fillable = ["identifier", "password", "email", "type_id"];
 
     protected $hidden = ["password"];
 

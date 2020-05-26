@@ -3,22 +3,19 @@
 namespace App\Http\Responses;
 
 use App\AccessToken;
-use App\Model;
 use App\RefreshToken;
+use App\User;
 
-class ModelRegistrationResponse extends Response
+class UserRegistrationResponse extends Response
 {
 
-    public $model;
+    public $user;
     public $accessToken;
     public $refreshToken;
 
-    public function __construct(
-        Model $model,
-        AccessToken $accessToken,
-        RefreshToken $refreshToken
-    ) {
-        $this->model = new ModelResponse($model);
+    public function __construct(User $user, AccessToken $accessToken, RefreshToken $refreshToken)
+    {
+        $this->model = new UserResponse($user);
         $this->accessToken = new AccessTokenResponse($accessToken);
         $this->refreshToken = new RefreshTokenResponse($refreshToken);
     }

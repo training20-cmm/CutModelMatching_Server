@@ -2,46 +2,60 @@
 
 namespace App\Services;
 
+use App\AccessToken;
 use App\Hairdresser;
-use App\HairdresserAccessToken;
-use App\HairdresserRefreshToken;
-use App\Services\AccessTokenIssuanceService;
-use Illuminate\Support\Facades\Hash;
+use App\RefreshToken;
+use App\User;
+use App\UserType;
 
 class HairdresserRegistrationService
 {
 
-    public static function execute(string $name, string $identifier, string $rawPassword): HairdresserRegistrationServiceOutput
-    {
-        $password = Hash::make($rawPassword);
-        $hairdresser = Hairdresser::create([
+    public function register(
+        string $identifier,
+        string $rawPassword,
+        string $name,
+        string $gender,
+        string $birthday
+    ): HairdresserRegistrationServiceOutput {
+        $userRegistrationService = new UserRegistrationService();
+        $userRegistrationServiceOutput = $userRegistrationService->register(
+            $identifier,
+            $rawPassword,
+            UserType::NAME_HAIRDRESSER
+        );
+        $parameters = [
             "name" => $name,
-            "identifier" => $identifier,
-            "password" => $password
-        ]);
-        $refreshToken = RefreshTokenIssuanceService::execute($hairdresser->id, true);
-        $accessTokenIssuanceServiceOutput = AccessTokenIssuanceService::execute($refreshToken);
+            "gender" => $gender,
+            "birthday" => $birthday,
+            "user_id" => $userRegistrationServiceOutput->user->id
+        ];
+        $hairdresser = Hairdresser::create($parameters);
         return new HairdresserRegistrationServiceOutput(
-            $hairdresser,
-            $accessTokenIssuanceServiceOutput->accessToken,
-            $accessTokenIssuanceServiceOutput->refreshToken
+            $userRegistrationServiceOutput->user,
+            $userRegistrationServiceOutput->accessToken,
+            $userRegistrationServiceOutput->refreshToken,
+            $hairdresser
         );
     }
 }
 
 class HairdresserRegistrationServiceOutput
 {
-    public $hairdresser;
+    public $user;
     public $accessToken;
     public $refreshToken;
+    public $hairdresser;
 
     public function __construct(
-        Hairdresser $hairdresser,
-        HairdresserAccessToken $accessToken,
-        HairdresserRefreshToken $refreshToken
+        User $user,
+        AccessToken $accessToken,
+        RefreshToken $refreshToken,
+        Hairdresser $hairdresser
     ) {
-        $this->hairdresser = $hairdresser;
+        $this->user = $user;
         $this->accessToken = $accessToken;
         $this->refreshToken = $refreshToken;
+        $this->hairdresser = $hairdresser;
     }
 }

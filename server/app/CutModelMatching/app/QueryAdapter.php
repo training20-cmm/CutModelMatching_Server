@@ -5,10 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
-class Query
+class QueryAdapter
 {
 
-    public static function execute(string $class, $options)
+    public function execute(string $class, $options)
     {
         $eloquent = new $class;
         if (array_key_exists("search", $options)) {
@@ -54,5 +54,14 @@ class Query
         } else {
             return $eloquent->all();
         }
+    }
+
+    public function executeWithId(string $class, $options, int $id)
+    {
+        if (!empty($options["search"])) {
+            $options["search"] .= ",";
+        }
+        $options["search"] = "id=$id";
+        return $this->execute($class, $options);
     }
 }

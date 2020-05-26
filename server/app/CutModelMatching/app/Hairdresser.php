@@ -19,11 +19,24 @@ class Hairdresser extends Model
     const GENDER_LENGTH = 1;
 
     protected $fillable = [
-        'name'
+        "name",
+        "bio_text",
+        "specialty",
+        "profile_image_path",
+        "header_image_path",
+        "gender",
+        "birthday",
+        "salon_id",
+        "user_id"
     ];
 
     public function salon(): BelongsTo
     {
         return $this->belongsTo(Salon::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

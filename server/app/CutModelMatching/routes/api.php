@@ -15,13 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(["middleware" => "api"], function () {
-    Route::get("hairdressers", "HairdressersController@index");
-    Route::post("hairdressers/register", "HairdressersController@register");
-    Route::post("/model_access_tokens", "ModelAccessTokensController@issue");
-    Route::post("/models/register", "ModelsController@register");
-
-    //
-    Route::get("hairdressers/test", "HairdressersController@test");
+    Route::post("hairdressers/register", "Api\HairdressersController@register");
+    Route::post("models/register", "Api\ModelsController@register");
 });
 
 Route::group(["middleware" => ["api", "auth.model.token"]], function () {

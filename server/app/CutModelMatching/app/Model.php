@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -23,6 +24,15 @@ class Model extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        "name"
+        "name",
+        "bio_text",
+        "gender",
+        "birthday",
+        "user_id"
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

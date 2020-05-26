@@ -2,46 +2,60 @@
 
 namespace App\Services;
 
+use App\AccessToken;
 use App\Model;
-use App\ModelAccessToken;
-use App\ModelRefreshToken;
-use App\Services\AccessTokenIssuanceService;
-use Illuminate\Support\Facades\Hash;
+use App\RefreshToken;
+use App\User;
+use App\UserType;
 
 class ModelRegistrationService
 {
 
-    public static function execute(string $name, string $identifier, string $rawPassword): ModelRegistrationServiceOutput
-    {
-        $password = Hash::make($rawPassword);
-        $model = Model::create([
+    public function register(
+        string $identifier,
+        string $rawPassword,
+        string $name,
+        string $gender,
+        string $birthday
+    ): ModelRegistrationServiceOutput {
+        $userRegistrationService = new UserRegistrationService();
+        $userRegistrationServiceOutput = $userRegistrationService->register(
+            $identifier,
+            $rawPassword,
+            UserType::NAME_MODEL
+        );
+        $parameters = [
             "name" => $name,
-            "identifier" => $identifier,
-            "password" => $password
-        ]);
-        $refreshToken = RefreshTokenIssuanceService::execute($model->id, false);
-        $accessTokenIssuanceServiceOutput = AccessTokenIssuanceService::execute($refreshToken);
+            "gender" => $gender,
+            "birthday" => $birthday,
+            "user_id" => $userRegistrationServiceOutput->user->id
+        ];
+        $model = Model::create($parameters);
         return new ModelRegistrationServiceOutput(
-            $model,
-            $accessTokenIssuanceServiceOutput->accessToken,
-            $accessTokenIssuanceServiceOutput->refreshToken
+            $userRegistrationServiceOutput->user,
+            $userRegistrationServiceOutput->accessToken,
+            $userRegistrationServiceOutput->refreshToken,
+            $model
         );
     }
 }
 
 class ModelRegistrationServiceOutput
 {
-    public $model;
+    public $user;
     public $accessToken;
     public $refreshToken;
+    public $model;
 
     public function __construct(
-        Model $model,
-        ModelAccessToken $accessToken,
-        ModelRefreshToken $refreshToken
+        User $user,
+        AccessToken $accessToken,
+        RefreshToken $refreshToken,
+        Model $model
     ) {
-        $this->model = $model;
+        $this->user = $user;
         $this->accessToken = $accessToken;
         $this->refreshToken = $refreshToken;
+        $this->model = $model;
     }
 }

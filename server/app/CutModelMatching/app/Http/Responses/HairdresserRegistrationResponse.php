@@ -2,21 +2,24 @@
 
 namespace App\Http\Responses;
 
-use App\HairdresserAccessToken;
-use App\HairdresserRefreshToken;
+use App\AccessToken;
 use App\Hairdresser;
+use App\RefreshToken;
 
 class HairdresserRegistrationResponse extends Response
 {
 
     public $hairdresser;
-    public $hairdresserAccessToken;
-    public $hairdresserRefreshToken;
+    public $accessToken;
+    public $refreshToken;
 
-    public function __construct(Hairdresser $hairdresser, HairdresserAccessToken $hairdresserAccessToken, HairdresserRefreshToken $hairdresserRefreshToken)
-    {
+    public function __construct(
+        Hairdresser $hairdresser,
+        AccessToken $accessToken,
+        RefreshToken $refreshToken
+    ) {
         $this->hairdresser = new HairdresserResponse($hairdresser);
-        $this->hairdresserAccessToken = new AccessTokenResponse($hairdresserAccessToken);
-        $this->hairdresserRefreshToken = new RefreshTokenResponse($hairdresserRefreshToken);
+        $this->accessToken = new AccessTokenResponse($accessToken);
+        $this->refreshToken = new RefreshTokenResponse($refreshToken);
     }
 }
