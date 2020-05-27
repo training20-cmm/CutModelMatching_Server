@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class QueryRequest extends FormRequest
+class CustomRequest extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -27,6 +26,11 @@ class QueryRequest extends FormRequest
         return [
             //
         ];
+    }
+
+    public function token(): string
+    {
+        return $this->header("Authorization");
     }
 
     public function hasQuery(): bool

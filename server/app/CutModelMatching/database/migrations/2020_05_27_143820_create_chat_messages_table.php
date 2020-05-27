@@ -18,11 +18,11 @@ class CreateChatMessagesTable extends Migration
             $table->increments('id');
             $table->string("content", ChatMessage::CONTENT_MAX_LENGTH)->nullable();
             $table->string("image_path", ChatMessage::IMAGE_PATH_MAX_LENGTH)->nullable();
-            $table->integer("sender_user_id")->unsigned();
-            $table->integer("receiver_user_id")->unsigned();
+            $table->integer("chat_room_id")->unsigned();
+            $table->integer("user_id")->unsigned();
             $table->timestamps();
-            $table->foreign("sender_user_id")->references("id")->on("users");
-            $table->foreign("receiver_user_id")->references("id")->on("users");
+            $table->foreign("chat_room_id")->references("id")->on("chat_rooms");
+            $table->foreign("user_id")->references("id")->on("users");
         });
     }
 

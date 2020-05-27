@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(["middleware" => "api"], function () {
     Route::post("hairdressers/register", "Api\HairdressersController@register");
     Route::post("models/register", "Api\ModelsController@register");
+    // Route::get("chat_messages", "Api\ChatMessagesController@index");
 });
 
-Route::group(["middleware" => ["api", "auth.model.token"]], function () {
+Route::group(["middleware" => ["api", "auth.token"]], function () {
+    Route::get("chat_messages", "Api\ChatMessagesController@index");
 });

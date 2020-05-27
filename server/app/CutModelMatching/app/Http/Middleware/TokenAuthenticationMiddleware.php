@@ -2,10 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\HairdresserAccessToken;
+use App\AccessToken;
 use Closure;
 
-class HairdresserAccessTokenAuthenticationMiddleware
+class TokenAuthenticationMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class HairdresserAccessTokenAuthenticationMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $accessToken = HairdresserAccessToken::where("token", $request->header("Authorization"));
+        $accessToken = AccessToken::where("token", $request->header("Authorization"))->get()->first();
         if (is_null($accessToken)) {
             return response()->invalidAccessToken();
         }

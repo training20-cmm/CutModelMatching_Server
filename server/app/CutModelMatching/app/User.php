@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Model
 {
@@ -13,6 +14,11 @@ class User extends Model
     protected $fillable = ["identifier", "password", "email", "type_id"];
 
     protected $hidden = ["password"];
+
+    public function type(): BelongsTo
+    {
+        return $this->belongsTo(UserType::class);
+    }
 
     public function refreshToken(): ?RefreshToken
     {
