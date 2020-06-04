@@ -1,6 +1,9 @@
 <?php
 
 use App\Hairdresser;
+use App\Salon;
+use App\User;
+use App\UserType;
 use Illuminate\Database\Seeder;
 
 class HairdressersTableSeeder extends Seeder
@@ -12,6 +15,15 @@ class HairdressersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Hairdresser::class, 100)->create();
+        $userType = UserType::where("name", UserType::NAME_HAIRDRESSER)->get()->first();
+        for ($i = 0; $i < 100; ++$i) {
+            $user = factory(User::class)->make([
+                "type_id" => $userType->id
+            ]);
+            $user->save();
+            factory(Hairdresser::class)->create([
+                "user_id" => $user->id,
+            ]);
+        }
     }
 }

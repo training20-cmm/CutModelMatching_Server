@@ -11,7 +11,7 @@ class ModelResponse extends Response
     public $identifier;
     public $user;
 
-    public function __construct(Model $model)
+    public function constructWith(Model $model)
     {
         $this->name = $model->name;
         $this->identifier = $model->identifier;

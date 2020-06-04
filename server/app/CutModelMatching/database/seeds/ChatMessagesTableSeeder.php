@@ -1,6 +1,8 @@
 <?php
 
 use App\ChatMessage;
+use App\ChatRoom;
+use App\User;
 use Illuminate\Database\Seeder;
 
 class ChatMessagesTableSeeder extends Seeder
@@ -12,6 +14,16 @@ class ChatMessagesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(ChatMessage::class, 100)->create();
+        $chatRooms = ChatRoom::with(["hairdresser", "model"])->get()->all();
+        foreach ($chatRooms as $chatRoom) {
+            factory(ChatMessage::class)->create([
+                "chat_room_id" => $chatRoom->id,
+                "user_id" => $chatRoom->hairdresser->id,
+            ]);
+            factory(ChatMessage::class)->create([
+                "chat_room_id" => $chatRoom->id,
+                "user_id" => $chatRoom->model->id,
+            ]);
+        }
     }
 }

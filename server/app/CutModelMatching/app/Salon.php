@@ -8,7 +8,7 @@ class Salon extends Model
 {
 
     const POSTCODE_MAX_LENGTH = 7;
-    const PREFECTURE_MAX_LENGTH = 3;
+    const PREFECTURE_MAX_LENGTH = 4;
     const ADDRESS_MAX_LENGTH = 255;
     const BUILDING_MAX_LENGTH = 255;
     const BIO_TEXT_MAX_LENGTH = 2056;
