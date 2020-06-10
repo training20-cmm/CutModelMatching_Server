@@ -77,8 +77,8 @@ class ChatRoomsController extends Controller
         foreach ($chatRooms as $chatRoom) {
             $chatMessageResponse = new ChatMessageResponse();
             $chatMessageResponse->content = $chatRoom->cm_content;
-            $chatMessageResponse->image_path = $chatRoom->cm_image_path;
-            $chatMessageResponse->created_at = $chatRoom->cm_created_at;
+            $chatMessageResponse->imagePath = $chatRoom->cm_image_path;
+            $chatMessageResponse->createdAt = $chatRoom->cm_created_at;
             $modelResponse = new ModelResponse();
             $modelResponse->name = $chatRoom->m_name;
             $chatRoomHistoryResponse = new ChatRoomHistoryHairdresserResponse();
