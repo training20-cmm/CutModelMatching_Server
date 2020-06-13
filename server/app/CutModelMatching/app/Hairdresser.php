@@ -21,14 +21,16 @@ class Hairdresser extends Model
 
     protected $fillable = [
         "name",
+        "ruby",
         "bio_text",
         "specialty",
         "profile_image_path",
-        "header_image_path",
         "gender",
         "birthday",
+        "years",
         "salon_id",
-        "user_id"
+        "user_id",
+        "position_id"
     ];
 
     public function salon(): BelongsTo
