@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Salon extends Model
 {
 
+    const NAME_MAX_LENGTH = 64;
     const POSTCODE_MAX_LENGTH = 7;
     const PREFECTURE_MAX_LENGTH = 4;
     const ADDRESS_MAX_LENGTH = 255;
@@ -16,6 +17,7 @@ class Salon extends Model
     const HEADER_IMAGE_PATH_MAX_LENGTH = 1023;
 
     protected $fillable = [
+        "name",
         "postcode",
         "prefecture",
         "address",

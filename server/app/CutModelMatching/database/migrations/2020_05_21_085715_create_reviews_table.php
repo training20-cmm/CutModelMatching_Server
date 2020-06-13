@@ -18,8 +18,8 @@ class CreateReviewsTable extends Migration
             $table->increments('id');
             $table->string("content", Review::CONTENT_MAX_LENGTH);
             $table->tinyInteger("skill")->unsigned();
-            $table->tinyInteger("service")->unsigned();
-            $table->tinyInteger("salon")->unsigned();
+            $table->tinyInteger("customer_service")->unsigned();
+            $table->tinyInteger("salon_service")->unsigned();
             $table->tinyInteger("app")->unsigned();
             $table->integer("model_id")->unsigned();
             $table->integer("hairdresser_id")->unsigned();

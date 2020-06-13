@@ -2,6 +2,7 @@
 
 namespace App\Http\Responses;
 
+use App\AccessToken;
 
 class AccessTokenResponse extends Response
 {
@@ -13,13 +14,13 @@ class AccessTokenResponse extends Response
     public $createdAt;
     public $updatedAt;
 
-    public function __construct($accessToken)
+    public function __construct(AccessToken $accessToken)
     {
         $this->id = $accessToken->id;
-        $this->expiration = $accessToken->expiration;
+        $this->expiration = $accessToken->expiration->toDateString();
         $this->token = $accessToken->token;
         $this->hairdresserId = $accessToken->hairdresser_id;
-        $this->createdAt = $accessToken->created_at;
-        $this->updatedAt = $accessToken->updated_at;
+        $this->createdAt = $accessToken->created_at->toDateString();
+        $this->updatedAt = $accessToken->updated_at->toDateString();
     }
 }
