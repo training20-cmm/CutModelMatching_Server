@@ -4,12 +4,18 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AccessToken extends Model
 {
     const TOKEN_MAX_LENGTH = 60;
 
     protected $fillable = ["token", "expiration", "user_id"];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function hasExpired(): bool
     {

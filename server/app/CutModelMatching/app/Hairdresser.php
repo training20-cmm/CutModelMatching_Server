@@ -10,6 +10,7 @@ class Hairdresser extends Model
 
     const IDENTIFIER_MAX_LENGTH = 64;
     const NAME_MAX_LENGTH = 64;
+    const RUBY_MAX_LENGTH = 255;
     const PASSWORD_MIN_LENGTH = 6;
     const PASSWORD_MAX_LENGTH = 60;
     const BIO_TEXT_MAX_LENGTH = 2056;

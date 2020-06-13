@@ -24,6 +24,7 @@ class CreateModelsTable extends Migration
             $table->char("gender", Model::GENDER_LENGTH);
             $table->date("birthday");
             $table->integer("user_id")->unsigned();
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign("user_id")->references("id")->on("users");
         });

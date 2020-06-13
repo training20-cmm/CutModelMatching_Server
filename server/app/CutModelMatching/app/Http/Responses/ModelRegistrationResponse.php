@@ -18,7 +18,8 @@ class ModelRegistrationResponse extends Response
         AccessToken $accessToken,
         RefreshToken $refreshToken
     ) {
-        $this->model = new ModelResponse($model);
+        $this->model = new ModelResponse();
+        $this->model->constructWith($model);
         $this->accessToken = new AccessTokenResponse($accessToken);
         $this->refreshToken = new RefreshTokenResponse($refreshToken);
     }

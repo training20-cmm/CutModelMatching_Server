@@ -11,6 +11,20 @@ class QueryAdapter
     public function execute(string $class, $options)
     {
         $eloquent = new $class;
+        return $this->executeWithBuilder($eloquent, $options);
+    }
+
+    public function executeWithId(string $class, $options, int $id)
+    {
+        if (!empty($options["search"])) {
+            $options["search"] .= ",";
+        }
+        $options["search"] = "id=$id";
+        return $this->execute($class, $options);
+    }
+
+    public function executeWithBuilder(Builder $eloquent, $options)
+    {
         if (array_key_exists("search", $options)) {
             $queries = explode(",", $options["search"]);
             foreach ($queries as $query) {
@@ -32,6 +46,10 @@ class QueryAdapter
                 }
             }
         }
+        if (array_key_exists("limit", $options)) {
+            $limit = $options["limit"];
+            $eloquent = $eloquent->limit($limit);
+        }
         if (array_key_exists("embed", $options)) {
             $fields = preg_grep("/[^,]/u", preg_split("/([^,]+\\(.+?\\)|,)/u", $options["embed"], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE));
             $relations = [];
@@ -52,16 +70,7 @@ class QueryAdapter
         if ($eloquent instanceof Builder) {
             return $eloquent->get()->all();
         } else {
-            return $eloquent->all();
+            return $eloquent->all()->all();
         }
-    }
-
-    public function executeWithId(string $class, $options, int $id)
-    {
-        if (!empty($options["search"])) {
-            $options["search"] .= ",";
-        }
-        $options["search"] = "id=$id";
-        return $this->execute($class, $options);
     }
 }

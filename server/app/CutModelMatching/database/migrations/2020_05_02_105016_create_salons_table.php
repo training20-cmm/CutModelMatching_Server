@@ -16,7 +16,7 @@ class CreateSalonsTable extends Migration
     {
         Schema::create('salons', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("name");
+            $table->string("name", Salon::NAME_MAX_LENGTH);
             $table->string("postcode", Salon::POSTCODE_MAX_LENGTH)->unique();
             $table->string("prefecture", Salon::PREFECTURE_MAX_LENGTH);
             $table->string("address", Salon::ADDRESS_MAX_LENGTH);

@@ -13,13 +13,14 @@ class RefreshTokenResponse extends Response
     public $createdAt;
     public $updatedAt;
 
-    public function __construct($hairdresserRefreshToken)
+    public function __construct($refreshToken)
     {
-        $this->id = $hairdresserRefreshToken->id;
-        $this->expiration = $hairdresserRefreshToken->expiration;
-        $this->token = $hairdresserRefreshToken->token;
-        $this->hairdresserId = $hairdresserRefreshToken->hairdresser_id;
-        $this->createdAt = $hairdresserRefreshToken->created_at;
-        $this->updatedAt = $hairdresserRefreshToken->updated_at;
+        info($refreshToken->expiration);
+        $this->id = $refreshToken->id;
+        $this->expiration = $refreshToken->expiration->toDateString();
+        $this->token = $refreshToken->token;
+        $this->hairdresserId = $refreshToken->hairdresser_id;
+        $this->createdAt = $refreshToken->created_at->toDateString();
+        $this->updatedAt = $refreshToken->updated_at->toDateString();
     }
 }
