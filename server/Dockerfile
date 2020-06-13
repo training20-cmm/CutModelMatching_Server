@@ -7,3 +7,5 @@ RUN yum -y install epel-release \
     && curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
     && composer global require "laravel/installer"
+
+WORKDIR /app/CutModelMatching
