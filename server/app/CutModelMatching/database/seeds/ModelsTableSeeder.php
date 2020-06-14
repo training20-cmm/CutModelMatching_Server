@@ -15,7 +15,7 @@ class ModelsTableSeeder extends Seeder
     public function run()
     {
         $userType = UserType::where("name", UserType::NAME_MODEL)->get()->first();
-        for ($i = 0; $i < 100; ++$i) {
+        for ($i = 0; $i < 10; ++$i) {
             $user = factory(User::class)->make([
                 "type_id" => $userType->id
             ]);

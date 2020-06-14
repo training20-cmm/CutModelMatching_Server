@@ -16,7 +16,7 @@ class HairdressersTableSeeder extends Seeder
     public function run()
     {
         $userType = UserType::where("name", UserType::NAME_HAIRDRESSER)->get()->first();
-        for ($i = 0; $i < 100; ++$i) {
+        for ($i = 0; $i < 10; ++$i) {
             $user = factory(User::class)->make([
                 "type_id" => $userType->id
             ]);
