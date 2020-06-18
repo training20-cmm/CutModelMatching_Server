@@ -16,9 +16,7 @@ class CreateSalonPaymentMethodsTable extends Migration
         Schema::create('salon_payment_methods', function (Blueprint $table) {
             $table->increments('id');
             $table->string("name");
-            $table->integer("salon_id")->unsigned();
             $table->timestamps();
-            $table->foreign("salon_id")->references("id")->on("salons");
         });
     }
 

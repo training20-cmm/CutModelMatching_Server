@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Salon extends Model
 {
@@ -23,7 +25,27 @@ class Salon extends Model
         "address",
         "building",
         "bio_text",
-        "profile_image_path",
-        "header_image_path"
+        "capacity",
+        "parking",
+        "open_hours_weekdays",
+        "close_hours_weekdays",
+        "open_hours_weekends",
+        "close_hours_weekends",
+        "regular_holiday",
     ];
+
+    public function paymentMethods(): BelongsToMany
+    {
+        return $this->belongsToMany(SalonPaymentMethod::class, "salon_payment_method_association");
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(SalonImage::class);
+    }
+
+    public function hairdressers(): HasMany
+    {
+        return $this->hasMany(Hairdresser::class);
+    }
 }
