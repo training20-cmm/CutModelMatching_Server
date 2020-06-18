@@ -25,6 +25,8 @@ class SalonResponse extends Response
     public $updatedAt;
 
     public $paymentMethods;
+    public $images;
+    public $hairdressers;
 
     public function constructWith(Salon $salon)
     {
@@ -54,5 +56,25 @@ class SalonResponse extends Response
             return $salonPaymentMethodResponse;
         }, $salonPaymentMethods);
         $this->paymentMethods = $salonPaymentMethodresponses;
+    }
+
+    public function setImages(array $salonImages)
+    {
+        $salonImageResponses = array_map(function ($salonImage) {
+            $salonImageResponse = new SalonImageResponse();
+            $salonImageResponse->constructWith($salonImage);
+            return $salonImageResponse;
+        }, $salonImages);
+        $this->images = $salonImageResponses;
+    }
+
+    public function setHairdressers(array $hairdressers)
+    {
+        $hairdresserResponses = array_map(function ($hairdresser) {
+            $hairdresserResponse = new HairdresserResponse($hairdresser);
+            // $hairdresserResponse->constructWith($salonImage);
+            return $hairdresserResponse;
+        }, $hairdressers);
+        $this->hairdressers = $hairdresserResponses;
     }
 }

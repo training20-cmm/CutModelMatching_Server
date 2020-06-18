@@ -26,14 +26,20 @@ class SalonsController extends Controller
             return self::badRequest();
         }
         if (!$request->hasQuery()) {
-            return [$hairdresser->salon];
+            return $hairdresser->salon;
         }
         $queryAdapter = new QueryAdapter();
-        return $queryAdapter->executeWithId(
+        $salon = $queryAdapter->executeWithId(
             Salon::class,
             $request->all(),
             $salon->id
-        );
+        )[0];
+        $salonResponse = new SalonResponse();
+        $salonResponse->constructWith($salon);
+        $salonResponse->setPaymentMethods($salon->paymentMethods->all());
+        $salonResponse->setImages($salon->images->all());
+        $salonResponse->setHairdressers($salon->hairdressers->all());
+        return $salonResponse;
     }
 
     public function store(CustomRequest $request): SalonResponse
