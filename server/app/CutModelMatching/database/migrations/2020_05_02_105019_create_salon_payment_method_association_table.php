@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSalonOpenHoursTable extends Migration
+class CreateSalonPaymentMethodAssociationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateSalonOpenHoursTable extends Migration
      */
     public function up()
     {
-        Schema::create('salon_open_hours', function (Blueprint $table) {
-            $table->increments('id');
-            $table->tinyInteger("open")->unsigned();
-            $table->tinyInteger("close")->unsigned();
+        Schema::create('salon_payment_method_association', function (Blueprint $table) {
             $table->integer("salon_id")->unsigned();
+            $table->integer("salon_payment_method_id")->unsigned();
             $table->timestamps();
             $table->foreign("salon_id")->references("id")->on("salons");
+            $table->foreign("salon_payment_method_id")->references("id")->on("salon_payment_methods");
         });
     }
 
@@ -30,6 +29,6 @@ class CreateSalonOpenHoursTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('salon_open_hours');
+        Schema::dropIfExists('salon_payment_method_association');
     }
 }

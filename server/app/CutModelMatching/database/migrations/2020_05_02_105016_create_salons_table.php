@@ -24,6 +24,11 @@ class CreateSalonsTable extends Migration
             $table->string("bio_text", Salon::BIO_TEXT_MAX_LENGTH);
             $table->tinyInteger("capacity")->unsigned();
             $table->smallInteger("parking")->unsigned();
+            $table->tinyInteger("open_hours_weekdays")->unsigned();
+            $table->tinyInteger("close_hours_weekdays")->unsigned();
+            $table->tinyInteger("open_hours_weekends")->unsigned();
+            $table->tinyInteger("close_hours_weekends")->unsigned();
+            $table->char("regular_holiday", 1);
             $table->timestamps();
         });
     }
