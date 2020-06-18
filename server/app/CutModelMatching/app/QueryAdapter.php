@@ -23,7 +23,7 @@ class QueryAdapter
         return $this->execute($class, $options);
     }
 
-    public function executeWithBuilder(Builder $eloquent, $options)
+    public function executeWithBuilder($eloquent, $options)
     {
         if (array_key_exists("search", $options)) {
             $queries = explode(",", $options["search"]);

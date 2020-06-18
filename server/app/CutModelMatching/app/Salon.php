@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Salon extends Model
 {
@@ -36,5 +37,15 @@ class Salon extends Model
     public function paymentMethods(): BelongsToMany
     {
         return $this->belongsToMany(SalonPaymentMethod::class, "salon_payment_method_association");
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(SalonImage::class);
+    }
+
+    public function hairdressers(): HasMany
+    {
+        return $this->hasMany(Hairdresser::class);
     }
 }

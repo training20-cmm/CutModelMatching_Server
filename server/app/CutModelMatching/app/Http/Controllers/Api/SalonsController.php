@@ -6,6 +6,7 @@ use App\Hairdresser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomRequest;
 use App\Http\Responses\SalonResponse;
+use App\QueryAdapter;
 use App\Salon;
 use App\SalonImage;
 use Illuminate\Support\Facades\DB;
@@ -13,8 +14,26 @@ use Illuminate\Support\Facades\DB;
 class SalonsController extends Controller
 {
 
-    public function index()
+    public function index(CustomRequest $request)
     {
+        $user = self::user($request->token());
+        $hairdresser = Hairdresser::where("user_id", $user->id)->get()->first();
+        if (is_null($hairdresser)) {
+            return self::badRequest();
+        }
+        $salon = $hairdresser->salon;
+        if (is_null($salon)) {
+            return self::badRequest();
+        }
+        if (!$request->hasQuery()) {
+            return [$hairdresser->salon];
+        }
+        $queryAdapter = new QueryAdapter();
+        return $queryAdapter->executeWithId(
+            Salon::class,
+            $request->all(),
+            $salon->id
+        );
     }
 
     public function store(CustomRequest $request): SalonResponse
@@ -47,7 +66,6 @@ class SalonsController extends Controller
             }
             if (!is_null($request->images)) {
                 $imageParameters = [];
-                info(json_encode($request->images));
                 foreach ($request->images as $image) {
                     $path = $image->store("public/images/salons/$salon->id");
                     $path = "storage" . substr($path, strlen("public"));
