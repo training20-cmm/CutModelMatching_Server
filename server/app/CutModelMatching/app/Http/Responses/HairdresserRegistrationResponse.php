@@ -18,7 +18,9 @@ class HairdresserRegistrationResponse extends Response
         AccessToken $accessToken,
         RefreshToken $refreshToken
     ) {
-        $this->hairdresser = new HairdresserResponse($hairdresser);
+        // $this->hairdresser = new HairdresserResponse($hairdresser);
+        $this->hairdresser = new HairdresserResponse();
+        $this->hairdresser->constructWith($hairdresser);
         $this->accessToken = new AccessTokenResponse($accessToken);
         $this->refreshToken = new RefreshTokenResponse($refreshToken);
     }

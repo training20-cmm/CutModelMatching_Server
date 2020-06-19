@@ -6,6 +6,7 @@ use App\MenuTag;
 use App\MenuTreatment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Menu extends Model
 {
@@ -23,11 +24,18 @@ class Menu extends Model
         "hairdresser_id"
     ];
 
-    public function tags(): BelongsToMany {
-        return $this->belongsToMany(MenuTag::class);
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(MenuTag::class, "menu_tag_association");
     }
 
-    public function treatment(): BelongsToMany {
-        return $this->belongsToMany(MenuTreatment::class);
+    public function treatment(): BelongsToMany
+    {
+        return $this->belongsToMany(MenuTreatment::class, "menu_treatment_association");
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(MenuImage::class);
     }
 }

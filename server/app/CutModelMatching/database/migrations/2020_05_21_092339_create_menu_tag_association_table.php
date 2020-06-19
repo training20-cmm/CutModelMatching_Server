@@ -15,11 +15,11 @@ class CreateMenuTagAssociationTable extends Migration
     {
         Schema::create('menu_tag_association', function (Blueprint $table) {
             $table->integer("menu_id")->unsigned();
-            $table->integer("tag_id")->unsigned();
+            $table->integer("menu_tag_id")->unsigned();
             $table->timestamps();
-            $table->primary(["menu_id", "tag_id"]);
+            $table->primary(["menu_id", "menu_tag_id"]);
             $table->foreign("menu_id")->references("id")->on("menus");
-            $table->foreign("tag_id")->references("id")->on("menu_tags");
+            $table->foreign("menu_tag_id")->references("id")->on("menu_tags");
         });
     }
 

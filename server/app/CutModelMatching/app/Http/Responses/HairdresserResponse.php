@@ -11,7 +11,7 @@ class HairdresserResponse extends Response
     public $identifier;
     public $user;
 
-    public function __construct(Hairdresser $hairdresser)
+    public function constructWith(Hairdresser $hairdresser)
     {
         $this->name = $hairdresser->name;
         $this->identifier = $hairdresser->identifier;

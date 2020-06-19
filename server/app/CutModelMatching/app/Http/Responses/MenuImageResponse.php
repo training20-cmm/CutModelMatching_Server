@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Response;
+namespace App\Http\Responses;
 
 use App\MenuImage;
 
-class MenuImageResponse extends Response {
+class MenuImageResponse extends Response
+{
 
     public $id;
     public $path;
@@ -12,12 +13,12 @@ class MenuImageResponse extends Response {
     public $createdAt;
     public $updatedAt;
 
-    public function constructWith(MenuImage $menuImage) {
+    public function constructWith(MenuImage $menuImage)
+    {
         $this->id = $menuImage->id;
         $this->path = $menuImage->path;
         $this->menuId = $menuImage->menuId;
         $this->createdAt = $menuImage->createdAt;
         $this->updatedAt = $menuImage->updatedAt;
     }
-
 }

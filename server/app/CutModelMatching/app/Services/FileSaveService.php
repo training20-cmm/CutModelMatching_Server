@@ -1,10 +1,14 @@
 <?php
 
-use Illuminate\Http\UplodedFile;
+namespace App\Services;
 
-class FileSaveService {
+use Illuminate\Http\UploadedFile;
 
-    public function save(UplodedFile $file, string $directory): string {
+class FileSaveService
+{
+
+    public function save(UploadedFile $file, string $directory): string
+    {
         $path = $file->store("public/$directory");
         $path = "storage" . substr($path, strlen("public"));
         return $path;

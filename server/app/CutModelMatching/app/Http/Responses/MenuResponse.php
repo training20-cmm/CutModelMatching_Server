@@ -1,17 +1,12 @@
 <?php
 
-namespace App\Http\Response;
+namespace App\Http\Responses;
 
 use App\Menu;
 
-class MenuResponse extends Response {
+class MenuResponse extends Response
+{
 
-    //  "title",
-    //     "details",
-    //     "gender",
-    //     "price",
-    //     "minutes",
-    //     "hairdresser_id"
     public $id;
     public $title;
     public $details;
@@ -23,7 +18,8 @@ class MenuResponse extends Response {
     public $images;
     public $treatment;
 
-    public function constructWith(Menu $menu) {
+    public function constructWith(Menu $menu)
+    {
         $this->id = $menu->id;
         $this->title = $menu->title;
         $this->details = $menu->details;
