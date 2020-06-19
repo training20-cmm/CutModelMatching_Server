@@ -8,4 +8,10 @@ class MenuTag extends Model
 {
     const NAME_MAX_LENGTH = 16;
     const COLOR_LENGTH = 6;
+
+    protected $fillable = [
+        "name",
+        "color",
+        "categoryId",
+    ];
 }
