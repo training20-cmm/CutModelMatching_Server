@@ -14,6 +14,7 @@ services:
       DATABASE_USER_PASSWORD: ${DATABASE_USER_PASSWORD}
     ports:
       - 8080:8000
+      - 8090:8090
     tty: true
     volumes:
       - ./server/app:/app

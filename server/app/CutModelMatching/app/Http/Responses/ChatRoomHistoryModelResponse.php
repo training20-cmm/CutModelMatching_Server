@@ -2,15 +2,15 @@
 
 namespace App\Http\Responses;
 
-use App\Model;
-
 class ChatRoomHistoryModelResponse extends ChatRoomHistoryResponse
 {
 
-    public $model;
+    public $hairdresser;
 
-    public function fillWith(Model $model)
+    public function fillWith(int $id, ChatMessageResponse $chatMessage, HairdresserResponse $hairdresser)
     {
-        $this->model = $model;
+        $this->id = $id;
+        $this->chatMessage = $chatMessage;
+        $this->hairdresser = $hairdresser;
     }
 }

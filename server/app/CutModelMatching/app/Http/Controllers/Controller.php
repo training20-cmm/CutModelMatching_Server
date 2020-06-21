@@ -21,7 +21,11 @@ class Controller extends BaseController
 
     protected static function badRequest(): ResponseFactory
     {
-        $a = response();
         return response("", 400);
+    }
+
+    protected static function forbidden(): ResponseFactory
+    {
+        return response("", 403);
     }
 }
