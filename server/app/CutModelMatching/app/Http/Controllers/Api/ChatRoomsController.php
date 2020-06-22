@@ -117,7 +117,8 @@ class ChatRoomsController extends Controller
                 "cm1.content as cm_content",
                 "cm1.image_path as cm_image_path",
                 "cm1.created_at as cm_created_at",
-                "h.name as h_name"
+                "h.name as h_name",
+                "h.user_id as h_user_id"
             )
             ->join("chat_messages as cm1", function ($join) {
                 $join->on("cr.id", "cm1.chat_room_id")->where("cm1.id", function ($query) {
@@ -135,6 +136,7 @@ class ChatRoomsController extends Controller
             $chatMessageResponse->createdAt = $chatRoom->cm_created_at;
             $hairdresserResponse = new HairdresserResponse();
             $hairdresserResponse->name = $chatRoom->h_name;
+            $hairdresserResponse->userId = $chatRoom->h_user_id;
             $chatRoomHistoryResponse = new ChatRoomHistoryModelResponse();
             $chatRoomHistoryResponse->fillWith($chatRoom->cr_id, $chatMessageResponse, $hairdresserResponse);
             $chatRoomHistoryResponses[] = $chatRoomHistoryResponse;

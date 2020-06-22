@@ -7,14 +7,44 @@ use App\Hairdresser;
 class HairdresserResponse extends Response
 {
 
-    public $name;
+    public $id;
     public $identifier;
-    public $user;
+    public $password;
+    public $email;
+    public $name;
+    public $ruby;
+    public $bioText;
+    public $speciality;
+    public $profileImagePath;
+    public $gender;
+    public $birthday;
+    public $years;
+    public $salonId;
+    public $userId;
+    public $positionId;
+    public $deletedAt;
+    public $createdAt;
+    public $updatedAt;
 
     public function constructWith(Hairdresser $hairdresser)
     {
+        $this->id = $hairdresser->id;
+        $this->identifier = $hairdresser->user->identifier;
+        $this->password = $hairdresser->user->password;
+        $this->email = $hairdresser->user->email;
         $this->name = $hairdresser->name;
-        $this->identifier = $hairdresser->identifier;
-        $this->user = $hairdresser->user;
+        $this->ruby = $hairdresser->ruby;
+        $this->bioText = $hairdresser->bio_text;
+        $this->speciality = $hairdresser->speciality;
+        $this->profileImagePath = $hairdresser->profile_image_path;
+        $this->gender = $hairdresser->gender;
+        $this->birthday = $hairdresser->birthday;
+        $this->years = $hairdresser->years;
+        $this->salonId = $hairdresser->salon_id;
+        $this->userId = $hairdresser->user_id;
+        $this->positionId = $hairdresser->position_id;
+        $this->deletedAt = is_null($hairdresser->deleted_at) ? null : $hairdresser->deleted_at->toDateString();
+        $this->createdAt = $hairdresser->created_at->toDateString();
+        $this->updatedAt = $hairdresser->updated_at->toDateString();
     }
 }
