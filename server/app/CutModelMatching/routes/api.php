@@ -23,6 +23,7 @@ Route::group(["middleware" => ["api", "auth.token"]], function () {
     Route::get("chat_rooms/history", "Api\ChatRoomsController@history");
     Route::get("chat_rooms/{chatRoomId}/messages", "Api\ChatRoomsController@messages");
     Route::post("menus", "Api\MenusController@store");
+    Route::get("models/me", "Api\ModelsController@me");
     Route::get("salons", "Api\SalonsController@index");
     Route::post("salons", "Api\SalonsController@store");
 });
