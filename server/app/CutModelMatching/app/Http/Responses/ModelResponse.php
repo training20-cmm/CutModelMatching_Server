@@ -25,13 +25,13 @@ class ModelResponse extends Response
         $this->identifier = $model->user->identifier;
         $this->password = $model->user->password;
         $this->email = $model->user->email;
-        $this->typeId = $model->user->typeId;
+        $this->typeId = $model->user->type_id;
         $this->name = $model->name;
-        $this->bioText = $model->bioText;
+        $this->bioText = $model->bio_text;
         $this->gender = $model->gender;
         $this->birthday = $model->birthday;
-        $this->userId = $model->userId;
-        $this->deletedAt = $model->deletedAt;
+        $this->userId = $model->user_id;
+        $this->deletedAt = $model->deleted_at->toDateString();
         $this->createdAt = $model->created_at->toDateString();
         $this->updatedAt = $model->updated_at->toDateString();
     }
