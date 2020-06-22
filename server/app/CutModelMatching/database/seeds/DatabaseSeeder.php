@@ -22,5 +22,11 @@ class DatabaseSeeder extends Seeder
         $this->call(AccessTokensTableSeeder::class);
         $this->call(ChatRoomsTableSeeder::class);
         $this->call(ChatMessagesTableSeeder::class);
+        $this->call(MenusTableSeeder::class);
+        $this->call(MenuImagesTableSeeder::class);
+        $this->call(MenuTagCategoriesTableSeeder::class);
+        $this->call(MenuTagsTableSeeder::class);
+        $this->call(MenuTreatmentTableSeeder::class);
+        $this->call(MenuTimeTableSeeder::class);
     }
 }

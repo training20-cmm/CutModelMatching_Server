@@ -48,33 +48,33 @@ class SalonResponse extends Response
         $this->updatedAt = $salon->updated_at->toDateString();
     }
 
-    public function setPaymentMethods(array $salonPaymentMethods)
-    {
-        $salonPaymentMethodresponses = array_map(function ($salonPaymentMethod) {
-            $salonPaymentMethodResponse = new SalonPaymentMethodResponse();
-            $salonPaymentMethodResponse->constructWith($salonPaymentMethod);
-            return $salonPaymentMethodResponse;
-        }, $salonPaymentMethods);
-        $this->paymentMethods = $salonPaymentMethodresponses;
-    }
+    //     public function setPaymentMethods(array $salonPaymentMethods)
+    //     {
+    //         $salonPaymentMethodresponses = array_map(function ($salonPaymentMethod) {
+    //             $salonPaymentMethodResponse = new SalonPaymentMethodResponse();
+    //             $salonPaymentMethodResponse->constructWith($salonPaymentMethod);
+    //             return $salonPaymentMethodResponse;
+    //         }, $salonPaymentMethods);
+    //         $this->paymentMethods = $salonPaymentMethodresponses;
+    //     }
 
-    public function setImages(array $salonImages)
-    {
-        $salonImageResponses = array_map(function ($salonImage) {
-            $salonImageResponse = new SalonImageResponse();
-            $salonImageResponse->constructWith($salonImage);
-            return $salonImageResponse;
-        }, $salonImages);
-        $this->images = $salonImageResponses;
-    }
+    //     public function setImages(array $salonImages)
+    //     {
+    //         $salonImageResponses = array_map(function ($salonImage) {
+    //             $salonImageResponse = new SalonImageResponse();
+    //             $salonImageResponse->constructWith($salonImage);
+    //             return $salonImageResponse;
+    //         }, $salonImages);
+    //         $this->images = $salonImageResponses;
+    //     }
 
-    public function setHairdressers(array $hairdressers)
-    {
-        $hairdresserResponses = array_map(function ($hairdresser) {
-            $hairdresserResponse = new HairdresserResponse($hairdresser);
-            // $hairdresserResponse->constructWith($salonImage);
-            return $hairdresserResponse;
-        }, $hairdressers);
-        $this->hairdressers = $hairdresserResponses;
-    }
+    //     public function setHairdressers(array $hairdressers)
+    //     {
+    //         $hairdresserResponses = array_map(function ($hairdresser) {
+    //             $hairdresserResponse = new HairdresserResponse($hairdresser);
+    //             // $hairdresserResponse->constructWith($salonImage);
+    //             return $hairdresserResponse;
+    //         }, $hairdressers);
+    //         $this->hairdressers = $hairdresserResponses;
+    //     }
 }

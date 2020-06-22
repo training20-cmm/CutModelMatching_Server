@@ -20,7 +20,7 @@ class CreateMenusTable extends Migration
             $table->string("details", Menu::DETAILS_MAX_LENGTH);
             $table->char("gender", Menu::GENDER_LENGTH);
             $table->integer("price")->unsigned();
-            $table->dateTime("time");
+            $table->smallInteger("minutes")->unsigned();
             $table->integer("hairdresser_id")->unsigned();
             $table->timestamps();
             $table->foreign("hairdresser_id")->references("id")->on("hairdressers");

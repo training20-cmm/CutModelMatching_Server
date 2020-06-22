@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMenuTagAssociationTable extends Migration
+class CreateMenuTreatmentAssociationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateMenuTagAssociationTable extends Migration
      */
     public function up()
     {
-        Schema::create('menu_tag_association', function (Blueprint $table) {
+        Schema::create('menu_treatment_association', function (Blueprint $table) {
             $table->integer("menu_id")->unsigned();
-            $table->integer("menu_tag_id")->unsigned();
+            $table->integer("menu_treatment_id")->unsigned();
             $table->timestamps();
-            $table->primary(["menu_id", "menu_tag_id"]);
             $table->foreign("menu_id")->references("id")->on("menus");
-            $table->foreign("menu_tag_id")->references("id")->on("menu_tags");
+            $table->foreign("menu_treatment_id")->references("id")->on("menu_treatment");
         });
     }
 
@@ -30,6 +29,6 @@ class CreateMenuTagAssociationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menu_tag_association');
+        Schema::dropIfExists('menu_treatment_association');
     }
 }

@@ -5,10 +5,16 @@ namespace App\Http\Controllers\Api;
 use App\Hairdresser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomRequest;
+use App\Http\Responses\HairdresserResponse;
+use App\Http\Responses\SalonImageResponse;
+use App\Http\Responses\SalonPaymentMethodResponse;
 use App\Http\Responses\SalonResponse;
 use App\QueryAdapter;
 use App\Salon;
 use App\SalonImage;
+use App\SalonPaymentMethod;
+use App\Services\FileSaveService;
+use App\Services\ResponseConvertService;
 use Illuminate\Support\Facades\DB;
 
 class SalonsController extends Controller
@@ -34,11 +40,12 @@ class SalonsController extends Controller
             $request->all(),
             $salon->id
         )[0];
+        $converter = new ResponseConvertService();
         $salonResponse = new SalonResponse();
         $salonResponse->constructWith($salon);
-        $salonResponse->setPaymentMethods($salon->paymentMethods->all());
-        $salonResponse->setImages($salon->images->all());
-        $salonResponse->setHairdressers($salon->hairdressers->all());
+        $salonResponse->paymentMethods = $converter->convert($salon->paymentMethods->all(), SalonPaymentMethodResponse::class);
+        $salonResponse->images = $converter->convert($salon->images->all(), SalonImageResponse::class);
+        $salonResponse->hairdressers = $converter->convert($salon->hairdressers->all(), HairdresserResponse::class);
         return $salonResponse;
     }
 
@@ -73,8 +80,13 @@ class SalonsController extends Controller
             if (!is_null($request->images)) {
                 $imageParameters = [];
                 foreach ($request->images as $image) {
-                    $path = $image->store("public/images/salons/$salon->id");
-                    $path = "storage" . substr($path, strlen("public"));
+                    if (!$image->isValid()) {
+                        continue;
+                    }
+                    $fileSaveService = new FileSaveService();
+                    $path = $fileSaveService->save($image, "images/salons/$salon->id");
+                    // $path = $image->store("public/images/salons/$salon->id");
+                    // $path = "storage" . substr($path, strlen("public"));
                     $imageParameters[] = ["path" => $path, "salon_id" => $salon->id];
                 }
                 DB::table(SalonImage::table())->insert($imageParameters);
@@ -83,9 +95,13 @@ class SalonsController extends Controller
             $hairdresser->save();
             return $salon;
         });
+        $converter = new ResponseConvertService();
+        $salon = Salon::with(["paymentMethods", "images", "hairdressers"])->where("id", $salon->id)->first();
         $salonResponse = new SalonResponse();
         $salonResponse->constructWith($salon);
-        $salonResponse->setPaymentMethods($salon->paymentMethods->all());
+        $salonResponse->paymentMethods = $converter->convert($salon->paymentMethods->all(), SalonPaymentMethodResponse::class);
+        $salonResponse->images = $converter->convert($salon->images->all(), SalonImageResponse::class);
+        $salonResponse->hairdressers = $converter->convert($salon->hairdressers->all(), HairdresserResponse::class);
         return $salonResponse;
     }
 }
