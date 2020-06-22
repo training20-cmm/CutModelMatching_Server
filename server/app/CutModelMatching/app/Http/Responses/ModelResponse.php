@@ -31,7 +31,7 @@ class ModelResponse extends Response
         $this->gender = $model->gender;
         $this->birthday = $model->birthday;
         $this->userId = $model->user_id;
-        $this->deletedAt = $model->deleted_at->toDateString();
+        $this->deletedAt = is_null($model->deleted_at) ? null : $model->deleted_at->toDateString();
         $this->createdAt = $model->created_at->toDateString();
         $this->updatedAt = $model->updated_at->toDateString();
     }
