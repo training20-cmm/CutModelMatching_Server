@@ -21,11 +21,9 @@ class ChatRoomsController extends Controller
 
     public function messages(CustomRequest $customRequest, Int $chatRoomId)
     {
-        info("messages");
         $user = self::user($customRequest->token());
         $chatRoom = ChatRoom::with(["messages", "hairdresser", "model"])->where("id", $chatRoomId)->first();
         if ($chatRoom->model->user_id !== $user->id && $chatRoom->hairdresser->user_id !== $user->id) {
-            info("forbidden");
             return self::forbidden();
         }
         $chatMessageResponses = array_map(function ($chatMessage) {
@@ -82,7 +80,8 @@ class ChatRoomsController extends Controller
                 "cm1.content as cm_content",
                 "cm1.image_path as cm_image_path",
                 "cm1.created_at as cm_created_at",
-                "m.name as m_name"
+                "m.name as m_name",
+                "m.user_id as m_user_id"
             )
             ->join("chat_messages as cm1", function ($join) {
                 $join->on("cr.id", "cm1.chat_room_id")->where("cm1.id", function ($query) {
@@ -100,8 +99,9 @@ class ChatRoomsController extends Controller
             $chatMessageResponse->createdAt = $chatRoom->cm_created_at;
             $modelResponse = new ModelResponse();
             $modelResponse->name = $chatRoom->m_name;
+            $modelResponse->userId = $chatRoom->m_user_id;
             $chatRoomHistoryResponse = new ChatRoomHistoryHairdresserResponse();
-            $chatRoomHistoryResponse->fillWith($chatMessageResponse, $modelResponse);
+            $chatRoomHistoryResponse->fillWith($chatRoom->cr_id, $chatMessageResponse, $modelResponse);
             $chatRoomHistoryResponses[] = $chatRoomHistoryResponse;
         }
         return $chatRoomHistoryResponses;
