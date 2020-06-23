@@ -79,6 +79,7 @@ class ChatRoomsController extends Controller
                 "cm1.id as cm_id",
                 "cm1.content as cm_content",
                 "cm1.image_path as cm_image_path",
+                "cm1.user_id as cm_user_id",
                 "cm1.created_at as cm_created_at",
                 "m.name as m_name",
                 "m.user_id as m_user_id"
@@ -96,6 +97,7 @@ class ChatRoomsController extends Controller
             $chatMessageResponse = new ChatMessageResponse();
             $chatMessageResponse->content = $chatRoom->cm_content;
             $chatMessageResponse->imagePath = $chatRoom->cm_image_path;
+            $chatMessageResponse->userId = $chatRoom->cm_user_id;
             $chatMessageResponse->createdAt = $chatRoom->cm_created_at;
             $modelResponse = new ModelResponse();
             $modelResponse->name = $chatRoom->m_name;
@@ -116,6 +118,7 @@ class ChatRoomsController extends Controller
                 "cm1.id as cm_id",
                 "cm1.content as cm_content",
                 "cm1.image_path as cm_image_path",
+                "cm1.user_id as cm_user_id",
                 "cm1.created_at as cm_created_at",
                 "h.name as h_name",
                 "h.user_id as h_user_id"
@@ -133,6 +136,7 @@ class ChatRoomsController extends Controller
             $chatMessageResponse = new ChatMessageResponse();
             $chatMessageResponse->content = $chatRoom->cm_content;
             $chatMessageResponse->imagePath = $chatRoom->cm_image_path;
+            $chatMessageResponse->userId = $chatRoom->cm_user_id;
             $chatMessageResponse->createdAt = $chatRoom->cm_created_at;
             $hairdresserResponse = new HairdresserResponse();
             $hairdresserResponse->name = $chatRoom->h_name;

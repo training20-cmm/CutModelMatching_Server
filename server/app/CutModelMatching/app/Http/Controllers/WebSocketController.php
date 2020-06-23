@@ -67,7 +67,7 @@ class WebSocketController extends Controller implements MessageComponentInterfac
         // $disconnectedId = $conn->resourceId;
         // unset($this->connectionsIndexedByResourceId[$disconnectedId]);
         foreach ($this->connections as $myUserId => $connection) {
-            if ($conn->resourceId !== $connection->conn->resourceId) {
+            if ($conn->resourceId !== $connection["conn"]->resourceId) {
                 continue;
             }
             unset($this->connections[$myUserId]);
