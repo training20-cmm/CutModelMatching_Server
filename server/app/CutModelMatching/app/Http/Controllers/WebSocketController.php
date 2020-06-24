@@ -40,13 +40,16 @@ class WebSocketController extends Controller implements MessageComponentInterfac
         $msgObject = json_decode($msg);
         if (isset($this->connections[$msgObject->myUserId])) {
             info("IS SET");
-            // ChatMessage::create([
-            //     "content" => $msgObject->text,
-            //     "chat_room_id" => $msgObject->chatRoomId,
-            //     "user_id" => $msgObject->myUserId,
-            // ]);
+            $chatMessage = ChatMessage::create([
+                "content" => $msgObject->text,
+                "chat_room_id" => $msgObject->chatRoomId,
+                "user_id" => $msgObject->myUserId,
+            ]);
+            $broadcaseMsg = json_decode(json_encode($msgObject));
+            $broadcaseMsg->createdAt = $chatMessage->created_at->toDateTimeString();
+            $broadcaseMsg = json_encode($broadcaseMsg);
             $senderConn = $this->connections[$msgObject->myUserId]["conn"];
-            $senderConn->send($msg);
+            $senderConn->send($broadcaseMsg);
             if (!array_key_exists($msgObject->partnerUserId, $this->connections)) {
                 info("KEY DOES NOT EXIST");
                 return;
@@ -57,7 +60,7 @@ class WebSocketController extends Controller implements MessageComponentInterfac
             // info(get_class($this->connections[$msgObject->partnerUserId]));
             // $receiverConn = $this->connections[$msgObject->partnerUserId]->conn;
             $receiverConn = $this->connections[$msgObject->partnerUserId]["conn"];
-            $receiverConn->send($msg);
+            $receiverConn->send($broadcaseMsg);
             info("SEND MESSAGE OK!!!!");
         } else {
             info("IS NOT SET");

@@ -10,6 +10,12 @@ class ChatMessage extends Model
     const CONTENT_MAX_LENGTH = 255;
     const IMAGE_PATH_MAX_LENGTH = 1023;
 
+    protected $fillable = [
+        "content",
+        "chat_room_id",
+        "user_id",
+    ];
+
     public function senderUser(): BelongsTo
     {
         return $this->belongsTo(User::class, "sender_user_id");
