@@ -19,8 +19,9 @@ class ChatRoomHistoryHairdresserResponse extends ChatRoomHistoryResponse
         $this->model->constructWith($model);
     }
 
-    public function fillWith(ChatMessageResponse $chatMessage, ModelResponse $model)
+    public function fillWith(int $id, ChatMessageResponse $chatMessage, ModelResponse $model)
     {
+        $this->id = $id;
         $this->chatMessage = $chatMessage;
         $this->model = $model;
     }
