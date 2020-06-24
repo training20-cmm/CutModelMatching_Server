@@ -14,7 +14,7 @@ $factory->define(Hairdresser::class, function (Faker $faker) {
         "ruby" => "よみ",
         "bio_text" => $faker->text,
         "specialty" => $faker->paragraph(),
-        "profile_image_path" => "/dummy/path",
+        "profile_image_path" => "/storage/seed/dummy1.png",
         "gender" => ["男", "女"][rand(0, 1)],
         "birthday" => $faker->date(),
         "years" => rand(0, 30),

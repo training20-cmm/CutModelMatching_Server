@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model;
+use App\ChatMessage;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
@@ -40,6 +40,13 @@ class WebSocketController extends Controller implements MessageComponentInterfac
         $msgObject = json_decode($msg);
         if (isset($this->connections[$msgObject->myUserId])) {
             info("IS SET");
+            // ChatMessage::create([
+            //     "content" => $msgObject->text,
+            //     "chat_room_id" => $msgObject->chatRoomId,
+            //     "user_id" => $msgObject->myUserId,
+            // ]);
+            $senderConn = $this->connections[$msgObject->myUserId]["conn"];
+            $senderConn->send($msg);
             if (!array_key_exists($msgObject->partnerUserId, $this->connections)) {
                 info("KEY DOES NOT EXIST");
                 return;
@@ -50,7 +57,7 @@ class WebSocketController extends Controller implements MessageComponentInterfac
             // info(get_class($this->connections[$msgObject->partnerUserId]));
             // $receiverConn = $this->connections[$msgObject->partnerUserId]->conn;
             $receiverConn = $this->connections[$msgObject->partnerUserId]["conn"];
-            $receiverConn->send($msgObject->text);
+            $receiverConn->send($msg);
             info("SEND MESSAGE OK!!!!");
         } else {
             info("IS NOT SET");

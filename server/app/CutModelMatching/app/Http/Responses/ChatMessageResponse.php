@@ -22,7 +22,7 @@ class ChatMessageResponse extends Response
         $this->imagePath = $chatMessage->imagePath;
         $this->chatRoomId = $chatMessage->chat_room_id;
         $this->userId = $chatMessage->user_id;
-        $this->createdAt = $chatMessage->created_at->toDateString();
-        $this->updatedAt = $chatMessage->updated_at->toDateString();
+        $this->createdAt = $chatMessage->created_at->toDateTimeString();
+        $this->updatedAt = $chatMessage->updated_at->toDateTimeString();
     }
 }
