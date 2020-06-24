@@ -17,7 +17,7 @@ class SalonImagesTableSeeder extends Seeder
         $salons = Salon::all()->all();
         foreach ($salons as $salon) {
             foreach ($files as $file) {
-                $path = "storage/seed";
+                $path = "/storage/seed";
                 SalonImage::create(["path" => "$path/$file", "salon_id" => $salon->id]);
             }
         }
