@@ -19,6 +19,43 @@ use Illuminate\Support\Facades\DB;
 class MenusController extends Controller
 {
 
+    public function search(CustomRequest $request)
+    {
+        // $prefecture = $request->prefecture;
+        // $treatmentIds = $request->treatmentIds;
+        // $minPrice = $request->minPrice;
+        // $maxPrice = $request->maxPrice;
+        // $date = $request->date;
+        // $startTime = $request->startTime;
+        // $endTime = $request->endTime;
+        // $gender = $request->gender;
+        // $paymentMethods = $request->paymentMethods;
+        // $salonScale = $request->salonScale;
+        // $parking = $request->parking;
+        return DB::table("menus as m")
+            ->select(
+                "m.title as m_title",
+                "m.details as m_details",
+                "m.price as m_price",
+                "m.minutes as m_minutes",
+                "h.profile_image_path as h_profile_image_path",
+                "h.name as h_name",
+                "mt.name as mt_name"
+            )
+            ->join("hairdressers as h", function ($join) {
+                $join->on("m.hairdresser_id", "h.id");
+            })
+            ->join("menu_tag_association as mta", function ($join) {
+                $join->on("m.id", "mta.menu_id");
+            })
+            ->join("menu_tags as mt", function ($join) {
+                $join->on("mt.id", "mta.menu_tag_id");
+            })
+            // ->join("models as m", "m.id", "cr.model_id")
+            // ->where("cr.hairdresser_id", $hairdresser->id)
+            ->get()->all();
+    }
+
     public function store(CustomRequest $request)
     {
         $user = self::user($request->token());
