@@ -8,6 +8,7 @@ use App\Http\Requests\CustomRequest;
 use App\Http\Requests\QueryRequest;
 use App\Http\Responses\HairdresserRegistrationResponse;
 use App\Http\Responses\HairdresserResponse;
+use App\Http\Responses\SalonResponse;
 use App\QueryAdapter;
 use App\Services\HairdresserRegistrationService;
 
@@ -25,6 +26,8 @@ class HairdressersController extends Controller
         $hairdresser = $queryAdapter->executeWithId(Hairdresser::class, $request->all(), $hairdresser->id)[0];
         $hairdresserResponse = new HairdresserResponse();
         $hairdresserResponse->constructWith($hairdresser);
+        $hairdresserResponse->salon = new SalonResponse();
+        $hairdresserResponse->salon->constructWith($hairdresser->salon);
         return $hairdresserResponse;
     }
 

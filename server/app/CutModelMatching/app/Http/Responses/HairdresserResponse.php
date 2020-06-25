@@ -26,6 +26,8 @@ class HairdresserResponse extends Response
     public $createdAt;
     public $updatedAt;
 
+    public $salon;
+
     public function constructWith(Hairdresser $hairdresser)
     {
         $this->id = $hairdresser->id;

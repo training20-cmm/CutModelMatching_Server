@@ -34,25 +34,41 @@ class MenusController extends Controller
         // $parking = $request->parking;
         return DB::table("menus as m")
             ->select(
+                "m.id as m_id",
                 "m.title as m_title",
                 "m.details as m_details",
                 "m.price as m_price",
                 "m.minutes as m_minutes",
                 "h.profile_image_path as h_profile_image_path",
                 "h.name as h_name",
-                "mt.name as mt_name"
+                "tag.name as tag_name",
+                "s.name as s_name",
+                "s.prefecture as s_prefecture",
+                "treatment.name as treatment_name"
             )
             ->join("hairdressers as h", function ($join) {
                 $join->on("m.hairdresser_id", "h.id");
             })
-            ->join("menu_tag_association as mta", function ($join) {
-                $join->on("m.id", "mta.menu_id");
+            ->join("menu_tag_association as tag_ass", function ($join) {
+                $join->on("m.id", "tag_ass.menu_id");
             })
-            ->join("menu_tags as mt", function ($join) {
-                $join->on("mt.id", "mta.menu_tag_id");
+            ->join("menu_tags as tag", function ($join) {
+                $join->on("tag.id", "tag_ass.menu_tag_id");
             })
-            // ->join("models as m", "m.id", "cr.model_id")
-            // ->where("cr.hairdresser_id", $hairdresser->id)
+            ->join("salons as s", function ($join) {
+                $join->on("s.id", "h.salon_id");
+            })
+            ->join("menu_treatment_association as treatment_ass", function ($join) {
+                $join->on("m.id", "treatment_ass.menu_id");
+            })
+            ->join("menu_treatment as treatment", function ($join) {
+                $join->on("treatment.id", "treatment_ass.menu_treatment_id");
+            })
+            //
+            ->where("s.prefecture", "東京都")
+            ->where("m.price", ">=", "2003")
+            ->where("m.price", "<=", "10000")
+            //
             ->get()->all();
     }
 
