@@ -14,6 +14,7 @@ class MenuResponse extends Response
     public $minutes;
     public $hairdresserId;
 
+    public $hairdresser;
     public $tags;
     public $images;
     public $treatment;

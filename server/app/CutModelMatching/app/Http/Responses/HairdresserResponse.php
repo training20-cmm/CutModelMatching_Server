@@ -3,6 +3,7 @@
 namespace App\Http\Responses;
 
 use App\Hairdresser;
+use Carbon\Carbon;
 
 class HairdresserResponse extends Response
 {
@@ -26,7 +27,10 @@ class HairdresserResponse extends Response
     public $createdAt;
     public $updatedAt;
 
+    public $age;
+
     public $salon;
+    public $position;
 
     public function constructWith(Hairdresser $hairdresser)
     {
@@ -48,5 +52,11 @@ class HairdresserResponse extends Response
         $this->deletedAt = is_null($hairdresser->deleted_at) ? null : $hairdresser->deleted_at->toDateString();
         $this->createdAt = $hairdresser->created_at->toDateString();
         $this->updatedAt = $hairdresser->updated_at->toDateString();
+    }
+
+    public function setAge(Carbon $createdAt)
+    {
+        $now = new Carbon();
+        $this->age = $now->diffInYears($createdAt);
     }
 }
