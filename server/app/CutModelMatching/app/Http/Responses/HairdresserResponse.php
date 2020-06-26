@@ -28,9 +28,11 @@ class HairdresserResponse extends Response
     public $updatedAt;
 
     public $age;
+    public $comprehensiveEvaluation;
 
     public $salon;
     public $position;
+    public $reviews;
 
     public function constructWith(Hairdresser $hairdresser)
     {
@@ -58,5 +60,16 @@ class HairdresserResponse extends Response
     {
         $now = new Carbon();
         $this->age = $now->diffInYears($createdAt);
+    }
+
+    public function setReviews(array $reviews)
+    {
+        $reviewSum = array_sum(array_map(function ($review) {
+            $arr = [$review->skill, $review->customerService, $review->salonService, $review->app];
+            return array_sum($arr) / count($arr);
+        }, $reviews));
+        $reviewsCount = count($reviews);
+        $this->comprehensiveEvaluation = $reviewsCount == 0 ? 0 : $reviewSum / $reviewsCount;
+        $this->reviews;
     }
 }

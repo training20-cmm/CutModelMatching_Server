@@ -11,6 +11,7 @@ use App\Http\Responses\MenuImageResponse;
 use App\Http\Responses\MenuTagResponse;
 use App\Http\Responses\MenuTreatmentResponse;
 use App\Http\Responses\MenuResponse;
+use App\Http\Responses\ReviewResponse;
 use App\Http\Responses\SalonResponse;
 use App\Menu;
 use App\MenuImage;
@@ -49,10 +50,15 @@ class MenusController extends Controller
                 "h.years as h_years",
                 "h.birthday as h_birthday",
                 "hp.name as hp_name",
+                "r.skill as r_skill",
+                "r.customer_service as r_customer_service",
+                "r.salon_service as r_salon_service",
+                "r.app as r_app",
                 "tag.name as tag_name",
                 "tag.color as tag_color",
                 "s.name as s_name",
                 "s.prefecture as s_prefecture",
+                "payment.id as payment_id",
                 "treatment.id as treatment_id",
                 "treatment.name as treatment_name",
                 "image.path as image_path"
@@ -68,6 +74,12 @@ class MenusController extends Controller
             })
             ->join("salons as s", function ($join) {
                 $join->on("s.id", "h.salon_id");
+            })
+            ->join("salon_payment_method_association as payment_association", function ($join) {
+                $join->on("s.id", "payment_association.salon_id");
+            })
+            ->join("salon_payment_methods as payment", function ($join) {
+                $join->on("payment_association.salon_payment_method_id", "payment.id");
             })
             ->join("menu_tag_association as tag_ass", function ($join) {
                 $join->on("m.id", "tag_ass.menu_id");
@@ -111,12 +123,21 @@ class MenusController extends Controller
         if (!is_null($gender)) {
             $builder = $builder->where("m.gender", $gender);
         }
+        if (!is_null($paymentMethodIds)) {
+            $builder = $builder->whereIn("payment.id", $paymentMethodIds);
+        }
+        if (!is_null($salonScale)) {
+            if ($salonScale === "large") {
+                $builder = $builder->where("s.capacity", ">=", 10);
+            } else {
+                $builder = $builder->where("s.capacity", "<", 10);
+            }
+        }
+        if (!is_null($parking) && $parking) {
+            $builder = $builder->where("s.parking", "!=", 0);
+        }
         $menuGroups = $builder->get()->groupBy("m_id")->all();
         $menuResponses = [];
-        //  "skill" => $faker->numberBetween(1, 5),
-        // "customer_service" => $faker->numberBetween(1, 5),
-        // "salon_service" => $faker->numberBetween(1, 5),
-        // "app" => $faker->numberBetween(1, 5),
         foreach ($menuGroups as $menuId => $menus) {
             $menu = $menus[0];
             $menuResponse = new MenuResponse();
@@ -138,6 +159,15 @@ class MenusController extends Controller
             $salon->name = $menu->s_name;
             $salon->prefecture = $menu->s_prefecture;
             $hairdresser->salon = $salon;
+            $reviews = array_map(function ($menu) {
+                $reviewResponse = new ReviewResponse();
+                $reviewResponse->skill = $menu->r_skill;
+                $reviewResponse->customerService = $menu->r_customer_service;
+                $reviewResponse->salonService = $menu->r_salon_service;
+                $reviewResponse->app = $menu->r_app;
+                return $reviewResponse;
+            }, $menus->all());
+            $hairdresser->setReviews($reviews);
             $menuResponse->hairdresser = $hairdresser;
             $menuResponse->salon = $salon;
             $menuResponse->tags = array_map(function ($menu) {
