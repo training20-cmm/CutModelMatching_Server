@@ -1,10 +1,10 @@
 <?php
 
 use App\Menu;
-use App\MenuImage;
+use App\Reservation;
 use Illuminate\Database\Seeder;
 
-class MenuImagesTableSeeder extends Seeder
+class ReservationTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,9 +15,8 @@ class MenuImagesTableSeeder extends Seeder
     {
         $menus = Menu::all()->all();
         foreach ($menus as $menu) {
-            factory(MenuImage::class)->create([
-                "menu_id" => $menu->id
-            ]);
+            $menuTime = $menu->time()->first();
+            factory(Reservation::class)->create(["menu_id" => $menu->id, "menu_time_id" => $menuTime->id]);
         }
     }
 }

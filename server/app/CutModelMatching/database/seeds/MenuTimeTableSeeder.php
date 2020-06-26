@@ -15,7 +15,7 @@ class MenuTimeTableSeeder extends Seeder
     {
         $menus = Menu::all()->all();
         foreach ($menus as $menu) {
-            factory(MenuTime::class, 30, ["menu_id" => $menu->id])->create();
+            factory(MenuTime::class, 30)->create(["menu_id" => $menu->id]);
         }
     }
 }

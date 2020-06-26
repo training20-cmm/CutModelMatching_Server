@@ -247,4 +247,10 @@ class MenusController extends Controller
         $menuResponse->treatment = $converter->convert($menu->treatment->all(), MenuTreatmentResponse::class);
         return $menuResponse;
     }
+
+    public function show(int $menuId)
+    {
+        $menu = Menu::with(["images", "hairdresser.salon", "tags", "time"])->where("id", $menuId)->get()->first();
+        return $menu;
+    }
 }

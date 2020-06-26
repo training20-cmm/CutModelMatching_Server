@@ -24,9 +24,11 @@ Route::group(["middleware" => ["api", "auth.token"]], function () {
     Route::get("chat_rooms/{chatRoomId}/messages", "Api\ChatRoomsController@messages");
     Route::get("hairdressers/me", "Api\HairdressersController@me");
     Route::post("menus", "Api\MenusController@store");
+    Route::get("menus/{menuId}", "Api\MenusController@show");
     Route::get("menus/search", "Api\MenusController@search");
     Route::get("menu_treatment", "Api\MenuTreatmentController@index");
     Route::get("models/me", "Api\ModelsController@me");
+    Route::get("reservation", "Api\ReservationController@index");
     Route::get("salons", "Api\SalonsController@index");
     Route::post("salons", "Api\SalonsController@store");
 });

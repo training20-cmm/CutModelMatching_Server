@@ -44,4 +44,9 @@ class Menu extends Model
     {
         return $this->belongsTo(Hairdresser::class);
     }
+
+    public function time(): HasMany
+    {
+        return $this->hasMany(MenuTime::class);
+    }
 }

@@ -6,7 +6,7 @@ use Faker\Generator as Faker;
 $factory->define(Salon::class, function (Faker $faker) {
     return [
         "name" => $faker->name,
-        "postcode" => str_random(7),
+        "postcode" => $faker->postcode,
         "prefecture" => $faker->prefecture(),
         "address" => $faker->address,
         "building" => "コラム南青山 5F",
