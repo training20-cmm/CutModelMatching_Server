@@ -23,6 +23,7 @@ use App\QueryAdapter;
 use App\Services\FileSaveService;
 use App\Services\ResponseConvertService;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class MenusController extends Controller
@@ -66,6 +67,7 @@ class MenusController extends Controller
                 "payment.id as payment_id",
                 "treatment.id as treatment_id",
                 "treatment.name as treatment_name",
+                "image.id as image_id",
                 "image.path as image_path"
             )
             ->join("hairdressers as h", function ($join) {
@@ -141,10 +143,12 @@ class MenusController extends Controller
         if (!is_null($parking) && $parking) {
             $builder = $builder->where("s.parking", "!=", 0);
         }
-        $menuGroups = $builder->get()->unique("tag_id")->unique("treatment_id")->groupBy("m_id")->all();
+        // $menuGroups = $builder->get()->groupBy("m_id")->unique("tag_id")->unique("treatment_id")->all();
+        $menuGroups = $builder->get()->groupBy("m_id")->all();
+        // info(json_encode($menuGroups));
         $menuResponses = [];
         foreach ($menuGroups as $menuId => $menus) {
-            info(json_encode($menus));
+            info($menuId);
             $menu = $menus[0];
             $menuResponse = new MenuResponse();
             $menuResponse->id = $menu->m_id;
@@ -179,22 +183,28 @@ class MenusController extends Controller
             $hairdresser->position = $hairdresserPosition;
             $menuResponse->hairdresser = $hairdresser;
             $menuResponse->salon = $salon;
-            $menuResponse->tags = array_map(function ($menu) {
+            $tagResponses = new Collection(array_map(function ($menu) {
                 $tagResponse = new MenuTagResponse();
+                $tagResponse->id = $menu->tag_id;
                 $tagResponse->name = $menu->tag_name;
                 $tagResponse->color = $menu->tag_color;
                 return $tagResponse;
-            }, $menus->all());
-            $menuResponse->treatment = array_map(function ($menu) {
+            }, $menus->all()));
+            $menuResponse->tags = array_values($tagResponses->unique("id")->all());
+            $treatmentResponses = new Collection(array_map(function ($menu) {
                 $treatmentResponse = new MenuTreatmentResponse();
+                $treatmentResponse->id = $menu->treatment_id;
                 $treatmentResponse->name = $menu->treatment_name;
                 return $treatmentResponse;
-            }, $menus->all());
-            $menuResponse->images = array_map(function ($menu) {
+            }, $menus->all()));
+            $menuResponse->treatment = array_values($treatmentResponses->unique("id")->all());
+            $imageResponses = new Collection(array_map(function ($menu) {
                 $menuImageResponse = new MenuImageResponse();
+                $menuImageResponse->id = $menu->image_id;
                 $menuImageResponse->path = $menu->image_path;
                 return $menuImageResponse;
-            }, $menus->all());
+            }, $menus->all()));
+            $menuResponse->images = array_values($imageResponses->unique("id")->all());
             $menuResponses[] = $menuResponse;
         }
         return $menuResponses;
