@@ -2,6 +2,7 @@
 
 use App\MenuTreatment;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class MenuTreatmentTableSeeder extends Seeder
 {
@@ -23,7 +24,7 @@ class MenuTreatmentTableSeeder extends Seeder
             ["ヘッドスパ"],
             ["ヘアセット"]
         ];
-        $treatmentParameters = array_map(function($treatment) {
+        $treatmentParameters = array_map(function ($treatment) {
             return ["name" => $treatment[0]];
         }, $treatmentList);
         DB::table(MenuTreatment::table())->insert($treatmentParameters);

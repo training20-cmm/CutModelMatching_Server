@@ -12,4 +12,6 @@ class ErrorCode
     const INVALID_ACCESS_TOKEN = 3;
 
     const EXPIRED_ACCESS_TOKEN = 4;
+
+    const RESOURCE_NOT_FOUND = 5;
 }

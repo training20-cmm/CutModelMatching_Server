@@ -6,16 +6,20 @@ use App\Hairdresser;
 use App\HairdresserPosition;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomRequest;
+use App\Http\Responses\HairdresserPositionResponse;
 use App\Http\Responses\HairdresserResponse;
 use App\Http\Responses\MenuImageResponse;
 use App\Http\Responses\MenuTagResponse;
 use App\Http\Responses\MenuTreatmentResponse;
 use App\Http\Responses\MenuResponse;
+use App\Http\Responses\MenuTimeResponse;
 use App\Http\Responses\ReviewResponse;
 use App\Http\Responses\SalonResponse;
 use App\Menu;
 use App\MenuImage;
 use App\MenuTime;
+use App\MenuTreatment;
+use App\QueryAdapter;
 use App\Services\FileSaveService;
 use App\Services\ResponseConvertService;
 use Carbon\Carbon;
@@ -54,6 +58,7 @@ class MenusController extends Controller
                 "r.customer_service as r_customer_service",
                 "r.salon_service as r_salon_service",
                 "r.app as r_app",
+                "tag.id as tag_id",
                 "tag.name as tag_name",
                 "tag.color as tag_color",
                 "s.name as s_name",
@@ -136,9 +141,10 @@ class MenusController extends Controller
         if (!is_null($parking) && $parking) {
             $builder = $builder->where("s.parking", "!=", 0);
         }
-        $menuGroups = $builder->get()->groupBy("m_id")->all();
+        $menuGroups = $builder->get()->unique("tag_id")->unique("treatment_id")->groupBy("m_id")->all();
         $menuResponses = [];
         foreach ($menuGroups as $menuId => $menus) {
+            info(json_encode($menus));
             $menu = $menus[0];
             $menuResponse = new MenuResponse();
             $menuResponse->id = $menu->m_id;
@@ -168,6 +174,9 @@ class MenusController extends Controller
                 return $reviewResponse;
             }, $menus->all());
             $hairdresser->setReviews($reviews);
+            $hairdresserPosition = new HairdresserPositionResponse();
+            $hairdresserPosition->name = $menu->hp_name;
+            $hairdresser->position = $hairdresserPosition;
             $menuResponse->hairdresser = $hairdresser;
             $menuResponse->salon = $salon;
             $menuResponse->tags = array_map(function ($menu) {
@@ -248,9 +257,41 @@ class MenusController extends Controller
         return $menuResponse;
     }
 
-    public function show(int $menuId)
+    public function show(CustomRequest $request, int $menuId)
     {
-        $menu = Menu::with(["images", "hairdresser.salon", "tags", "time"])->where("id", $menuId)->get()->first();
-        return $menu;
+        $menu = Menu::where("id", $menuId)->get()->first();
+        $menuResponse = new MenuResponse();
+        $menuResponse->constructWith($menu);
+        $hairdresserResponse = new HairdresserResponse();
+        $hairdresserResponse->constructWith($menu->hairdresser);
+        $salonResponse = new SalonResponse();
+        $salonResponse->constructWith($menu->hairdresser->salon);
+        $hairdresserResponse->salon = $salonResponse;
+        $menuResponse->hairdresser = $hairdresserResponse;
+        $menuImageResponses = array_map(function ($menuImage) {
+            $menuImageResponse = new MenuImageResponse();
+            $menuImageResponse->constructWith($menuImage);
+            return $menuImageResponse;
+        }, $menu->images->all());
+        $menuResponse->images = $menuImageResponses;
+        $menuTagResponses = array_map(function ($menuTag) {
+            $menuTagResponse = new MenuTagResponse();
+            $menuTagResponse->constructWith($menuTag);
+            return $menuTagResponse;
+        }, $menu->tags->all());
+        $menuResponse->tags = $menuTagResponses;
+        $menuTimeResponses = array_map(function ($menuTime) {
+            $menuTimeResponse = new MenuTimeResponse();
+            $menuTimeResponse->constructWith($menuTime);
+            return $menuTimeResponse;
+        }, $menu->time->all());
+        $menuResponse->time = $menuTimeResponses;
+        $menuTreatmentResponses = array_map(function ($menuTreatment) {
+            $menuTreatmentResponse = new MenuTreatmentResponse();
+            $menuTreatmentResponse->constructWith($menuTreatment);
+            return $menuTreatmentResponse;
+        }, $menu->treatment->all());
+        $menuResponse->treatment = $menuTreatmentResponses;
+        return $menuResponse;
     }
 }

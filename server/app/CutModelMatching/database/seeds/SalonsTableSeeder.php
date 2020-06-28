@@ -12,6 +12,6 @@ class SalonsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Salon::class, 10)->create();
+        factory(Salon::class, 30)->create();
     }
 }

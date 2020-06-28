@@ -29,17 +29,8 @@ class SalonsController extends Controller
         }
         $salon = $hairdresser->salon;
         if (is_null($salon)) {
-            return self::badRequest();
+            return self::notFound();
         }
-        if (!$request->hasQuery()) {
-            return $hairdresser->salon;
-        }
-        $queryAdapter = new QueryAdapter();
-        $salon = $queryAdapter->executeWithId(
-            Salon::class,
-            $request->all(),
-            $salon->id
-        )[0];
         $converter = new ResponseConvertService();
         $salonResponse = new SalonResponse();
         $salonResponse->constructWith($salon);

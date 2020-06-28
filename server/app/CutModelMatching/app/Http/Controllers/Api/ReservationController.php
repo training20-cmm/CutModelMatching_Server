@@ -16,11 +16,12 @@ class ReservationController extends Controller
     {
         $queryAdapter = new QueryAdapter();
         $reservationList = $queryAdapter->execute(Reservation::class, $request->all());
-        return array_map(function ($reservation) {
+        $reservationResponses = array_map(function ($reservation) {
             $reservationResponse = new ReservationResponse();
             $reservationResponse->constructWith($reservation);
             return $reservationResponse;
         }, $reservationList);
+        return $reservationResponses;
     }
 
     public function store(CustomRequest $request)

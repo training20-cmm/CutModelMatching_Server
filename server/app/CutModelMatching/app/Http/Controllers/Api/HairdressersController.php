@@ -22,12 +22,12 @@ class HairdressersController extends Controller
         if (is_null($hairdresser)) {
             return self::badRequest();
         }
-        $queryAdapter = new QueryAdapter();
-        $hairdresser = $queryAdapter->executeWithId(Hairdresser::class, $request->all(), $hairdresser->id)[0];
         $hairdresserResponse = new HairdresserResponse();
         $hairdresserResponse->constructWith($hairdresser);
-        $hairdresserResponse->salon = new SalonResponse();
-        $hairdresserResponse->salon->constructWith($hairdresser->salon);
+        if (!is_null($hairdresser->salon)) {
+            $hairdresserResponse->salon = new SalonResponse();
+            $hairdresserResponse->salon->constructWith($hairdresser->salon);
+        }
         return $hairdresserResponse;
     }
 

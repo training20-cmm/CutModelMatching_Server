@@ -12,7 +12,7 @@ class HairdresserPositionsTableSeeder extends Seeder
      */
     public function run()
     {
-        HairdresserPosition::create(["name" => "stylist"]);
-        HairdresserPosition::create(["name" => "assistant"]);
+        HairdresserPosition::create(["name" => "スタイリスト"]);
+        HairdresserPosition::create(["name" => "アシスタント"]);
     }
 }
