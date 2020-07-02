@@ -11,6 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use Illuminate\Support\Facades\Route;
+
+// Route::group(["middleware" => ["auth"]], function () {
+//     Route::get("/", "DashboardController@dashboard");
+// });
+
+Route::get('/dashboard/analytics', "DashboardController@analytics");
+Route::get('/dashboard/management/chat', "DashboardController@managementChat");

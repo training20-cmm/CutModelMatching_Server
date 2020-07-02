@@ -7,6 +7,14 @@ RUN yum -y install epel-release \
     && yum -y install git \
     && curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
-    && composer global require "laravel/installer"
+    && composer global require "laravel/installer" \
+    && curl -sL https://rpm.nodesource.com/setup_10.x | bash - \
+    && yum -y install nodejs \
+    && yum -y install make \
+    && npm install \
+    && npm install vuetify \
+    && npm install sass sass-loader fibers deepmerge -D \
+    && npm install vue-chartjs chart.js
+
 
 WORKDIR /app/CutModelMatching
