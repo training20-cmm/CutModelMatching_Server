@@ -31,6 +31,7 @@ Route::group(["middleware" => ["api", "auth.token"]], function () {
     Route::get("models/me", "Api\ModelsController@me");
     Route::get("reservation", "Api\ReservationController@index");
     Route::post("reservation", "Api\ReservationController@store");
+    Route::get("reservation/next", "Api\ReservationController@next");
     Route::get("salons", "Api\SalonsController@index");
     Route::post("salons", "Api\SalonsController@store");
 });

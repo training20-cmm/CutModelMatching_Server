@@ -18,6 +18,7 @@ class MenuResponse extends Response
     public $tags;
     public $images;
     public $treatment;
+    public $time;
 
     public function constructWith(Menu $menu)
     {

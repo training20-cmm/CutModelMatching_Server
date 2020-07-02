@@ -15,6 +15,8 @@ class ReservationResponse extends Response
     public $createdAt;
     public $updatedAt;
 
+    public $menu;
+
     public function constructWith(Reservation $reservation)
     {
         $this->id = $reservation->id;
