@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MenuTreatment;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,8 +13,11 @@ class DashboardController extends Controller
         return view("analytics");
     }
 
-    public function managementChat()
+    public function managementTreatment()
     {
-        return view("management.chat");
+        $treatmentList = MenuTreatment::all()->all();
+        return view("management.treatment", [
+            "treatmentList" => $treatmentList
+        ]);
     }
 }

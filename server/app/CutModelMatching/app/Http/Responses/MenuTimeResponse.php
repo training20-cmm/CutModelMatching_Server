@@ -20,7 +20,7 @@ class MenuTimeResponse extends Response
         $this->date = $menuTime->date;
         $this->start = $menuTime->start;
         $this->menuId = $menuTime->menu_id;
-        $this->createdAt = $menuTime->created_at->toDateTimeString();
-        $this->updatedAt = $menuTime->updated_at->toDateTimeString();
+        $this->createdAt = is_null($menuTime->created_at) ? null : $menuTime->created_at->toDateTimeString();
+        $this->updatedAt = is_null($menuTime->updated_at) ? null : $menuTime->updated_at->toDateTimeString();
     }
 }

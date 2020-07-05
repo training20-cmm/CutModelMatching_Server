@@ -13,9 +13,11 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Route::group(["middleware" => ["auth"]], function () {
-//     Route::get("/", "DashboardController@dashboard");
-// });
 
 Route::get('/dashboard/analytics', "DashboardController@analytics");
-Route::get('/dashboard/management/chat', "DashboardController@managementChat");
+Route::get('/dashboard/management/treatment', "DashboardController@managementTreatment");
+Route::get("/hairdressers/count", "HairdressersController@count");
+Route::get("/menu_treatment", "MenuTreatmentController@index");
+Route::post("/menu_treatment", "MenuTreatmentController@store");
+Route::get("/menus/count_by_menu_treatment_id", "MenusController@countByMenuTreatmentId");
+Route::get("/models/count", "ModelsController@count");

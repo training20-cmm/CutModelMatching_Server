@@ -38,7 +38,7 @@ class ReservationController extends Controller
             return self::badRequest();
         }
         $nextReservation = Reservation::with(["menu.hairdresser.salon"])
-            ->where("model_id", $model->id)->orderBy("id")->get()->first();
+            ->where("model_id", $model->id)->orderBy("id", "desc")->get()->first();
         if (is_null($nextReservation)) {
             return self::notFound();
         }

@@ -13,7 +13,7 @@
         @yield("links")
     </head>
     <body>
-        <v-app id="app">
+        <v-app id="app" class="h-100">
             @yield("app-content")
         </v-app>
         <script src="{{asset("js/app.js")}}"></script>

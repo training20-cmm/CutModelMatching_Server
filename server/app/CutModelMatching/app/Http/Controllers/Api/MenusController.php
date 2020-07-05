@@ -70,40 +70,40 @@ class MenusController extends Controller
                 "image.id as image_id",
                 "image.path as image_path"
             )
-            ->join("hairdressers as h", function ($join) {
+            ->leftJoin("hairdressers as h", function ($join) {
                 $join->on("m.hairdresser_id", "h.id");
             })
-            ->join("hairdresser_positions as hp", function ($join) {
+            ->leftJoin("hairdresser_positions as hp", function ($join) {
                 $join->on("h.position_id", "hp.id");
             })
-            ->join("reviews as r", function ($join) {
+            ->leftJoin("reviews as r", function ($join) {
                 $join->on("h.id", "r.hairdresser_id");
             })
-            ->join("salons as s", function ($join) {
+            ->leftJoin("salons as s", function ($join) {
                 $join->on("s.id", "h.salon_id");
             })
-            ->join("salon_payment_method_association as payment_association", function ($join) {
+            ->leftJoin("salon_payment_method_association as payment_association", function ($join) {
                 $join->on("s.id", "payment_association.salon_id");
             })
-            ->join("salon_payment_methods as payment", function ($join) {
+            ->leftJoin("salon_payment_methods as payment", function ($join) {
                 $join->on("payment_association.salon_payment_method_id", "payment.id");
             })
-            ->join("menu_tag_association as tag_ass", function ($join) {
+            ->leftJoin("menu_tag_association as tag_ass", function ($join) {
                 $join->on("m.id", "tag_ass.menu_id");
             })
-            ->join("menu_tags as tag", function ($join) {
+            ->leftJoin("menu_tags as tag", function ($join) {
                 $join->on("tag.id", "tag_ass.menu_tag_id");
             })
-            ->join("menu_treatment_association as treatment_ass", function ($join) {
+            ->leftJoin("menu_treatment_association as treatment_ass", function ($join) {
                 $join->on("m.id", "treatment_ass.menu_id");
             })
-            ->join("menu_treatment as treatment", function ($join) {
+            ->leftJoin("menu_treatment as treatment", function ($join) {
                 $join->on("treatment.id", "treatment_ass.menu_treatment_id");
             })
-            ->join("menu_time as time", function ($join) {
+            ->leftJoin("menu_time as time", function ($join) {
                 $join->on("m.id", "time.menu_id");
             })
-            ->join("menu_images as image", function ($join) {
+            ->leftJoin("menu_images as image", function ($join) {
                 $join->on("m.id", "image.menu_id");
             });
         if (!is_null($prefecture)) {

@@ -68,9 +68,9 @@ export default {
                     icon: "",
                     children: [
                         {
-                            title: "チャット",
-                            icon: "mdi-message-text",
-                            href: "/dashboard/management/chat",
+                            title: "施術内容",
+                            icon: "mdi-format-list-bulleted-square",
+                            href: "/dashboard/management/treatment",
                         },
                     ],
                 },

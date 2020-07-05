@@ -11,6 +11,7 @@ class MenuResponse extends Response
     public $title;
     public $details;
     public $gender;
+    public $price;
     public $minutes;
     public $hairdresserId;
 
@@ -26,6 +27,7 @@ class MenuResponse extends Response
         $this->title = $menu->title;
         $this->details = $menu->details;
         $this->gender = $menu->gender;
+        $this->price = $menu->price;
         $this->minutes = $menu->minutes;
         $this->hairdresserId = $menu->hairdresserId;
     }

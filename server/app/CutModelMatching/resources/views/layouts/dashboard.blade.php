@@ -6,8 +6,10 @@
         <v-col cols="3">
             <navigation-drawer></navigation-drawer>
         </v-col>
-        <v-col>
-            @yield("dashboard-content")
+        <v-col class="navigation-layout-container">
+            <div class="navigation-layout">
+                @yield("dashboard-content")
+            </div>
         </v-col>
     </v-row>
 </v-container>

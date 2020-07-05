@@ -1,5 +1,5 @@
 @extends("layouts.dashboard")
 
 @section("dashboard-content")
-<app-analitics></app-analitics>
+<app-analytics></app-analytics>
 @endsection

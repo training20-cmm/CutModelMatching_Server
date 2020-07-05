@@ -10928,6 +10928,16 @@ a.text-dark:focus {
   }
 }
 
+html {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+}
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -10939,5 +10949,16 @@ a.text-dark:focus {
 
 .w-100 {
   width: 100%;
+}
+
+.navigation-layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.navigation-layout {
+  flex: 1;
+  overflow: auto;
 }
 
